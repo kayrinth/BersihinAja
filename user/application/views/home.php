@@ -5,16 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BersihinAja</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f8f9fa;
-    }
-    .breadcrumb {
-      font-size: 12px;
-      text-transform: uppercase;
-      color: #8fa7b3;
-      letter-spacing: 1px;
     }
     .main-heading {
       font-size: 48px;
@@ -113,15 +108,12 @@
 </head>
 <body>
   <div class="container py-5">
-    <!-- Breadcrumb -->
-    <nav class="breadcrumb mb-4">
+
+    <nav class="font-semibold text-gray-400 text-sm uppercase gap-4 mb-4">
       <span>/ BersihinAja ~ Cleaning Service</span>
     </nav>
 
-    <!-- Main Heading -->
-    <h1 class="main-heading">Ruangan Bersih Berkilau</h1>
-
-    <!-- Info Box -->
+  <div class="flex flex-row items-center">
     <div class="d-flex align-items-start mt-4">
       <div class="info-box me-4">
         <div class="icon"></div>
@@ -129,7 +121,10 @@
           126+<span>Professional Tools</span>
         </div>
       </div>
+      <h1 class=" font-bold text-8xl flex justify-end items-end">Ruangan Bersih Berkilau</h1>
     </div>
+  
+  </div>
 
     <!-- Main Image -->
     <div class="main-image mt-4"></div>

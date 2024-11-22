@@ -5,7 +5,6 @@ class Pilih extends CI_Controller {
 
 		$this->load->view('pilih');	
 		$this->load->helper('url');
-		$this->load->view('footer');
 
 	}
 }

@@ -1,49 +1,66 @@
-<!-- Footer -->
-<footer class="bg-light text-center text-lg-start">
-    <div class="container p-4">
-        <!-- Social Media Section -->
-        <section class="mb-4">
-            <a href="#" class="btn btn-link btn-floating btn-sm text-dark m-1" role="button" data-mdb-ripple-color="dark"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="btn btn-link btn-floating btn-sm text-dark m-1" role="button" data-mdb-ripple-color="dark"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="btn btn-link btn-floating btn-sm text-dark m-1" role="button" data-mdb-ripple-color="dark"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="btn btn-link btn-floating btn-sm text-dark m-1" role="button" data-mdb-ripple-color="dark"><i class="fab fa-linkedin"></i></a>
-        </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    .bg {
+        background-color: #80BCBD;
+    }
+</style>
+<body>
 
-        <!-- Footer Links -->
-        <section class="">
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Tentang Kami</h5>
-                    <p>
-                        BersihinAja adalah layanan kebersihan profesional yang siap membantu Anda membersihkan rumah atau kantor dengan cepat dan mudah.
-                    </p>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Tautan</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-dark">Beranda</a></li>
-                        <li><a href="#" class="text-dark">Layanan</a></li>
-                        <li><a href="#" class="text-dark">Kontak</a></li>
-                        <li><a href="#" class="text-dark">FAQ</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Hubungi Kami</h5>
-                    <p>
-                        Jl. Kebersihan No. 123<br>
-                        Jakarta, Indonesia<br>
-                        Email: info@bersihinaja.com<br>
-                        Telepon: +62 123-456-789
-                    </p>
+<footer class="bg text-white py-4">
+    <div class="container">
+        <div class="row">
+            <!-- Logo and Description -->
+            <div class="col-md-4 mb-3">
+                <h2 class="fw-bold">BersihinAja</h2>
+                <p class="small">
+                    Leo elementum iaculis quam massa vitae odio sed. Morbi tincidunt senectus.
+                </p>
+                <div>
+                    <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-youtube"></i></a>
                 </div>
             </div>
-        </section>
-    </div>
-
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        © 2024 BersihinAja. Semua Hak Dilindungi.
+            <!-- Navigation Links -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">Navigation</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white text-decoration-none">Home</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">About Us</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Our Services</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Our Team</a></li>
+                </ul>
+            </div>
+            <!-- Services Links -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold">Services</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white text-decoration-none">Home Cleaning</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Office Cleaning</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Kitchen Cleaning</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Vehicle Cleaning</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="border-white">
+        <div class="text-center small">
+            <p class="mb-0">Copyright Â© 2024 BersihinAja | Design by Jawir</p>
+            <p>
+                <a href="#" class="text-white text-decoration-none me-2">Terms of Use</a>|
+                <a href="#" class="text-white text-decoration-none ms-2">Privacy Policy</a>
+            </p>
+        </div>
     </div>
 </footer>
+
+<!-- Bootstrap Icons (optional) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</body>
+</html>
