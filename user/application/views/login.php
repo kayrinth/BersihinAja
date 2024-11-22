@@ -36,7 +36,7 @@
         <div class="text-center mb-4">
             <h4 class="mt-3">Sign in</h4>
         </div>
-        <form method="POST" action="login_process.php" class="m-4">
+        <form method="POST" action="<?= base_url('home'); ?>" class="m-4">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="text" class="form-control" id="email" name="email" placeholder="Masukkan email " required>

@@ -29,7 +29,7 @@
 
         <!-- Login Button -->
         <div>
-          <a href="#" class="bg-[#80BCBD] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-500 transition duration-200">
+          <a href="/BersihinAja/user/" class="bg-[#80BCBD] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-500 transition duration-200">
             Log in
           </a>
         </div>
