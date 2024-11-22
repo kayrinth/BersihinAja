@@ -26,14 +26,14 @@
 </head>
 <body>
 
-    <!-- Brand Title -->
-    <div class="text-center mb-4">
-        <img src="/view/assets/wind.png" alt="Logo" width="50" height="50">
-
-        <h2 class="text-bold align-self-center ">BersihinAja</h2>
+    
+    <div class="text-center mb-4 d-flex align-items-center justify-content-center">
+        <img src="/BersihinAja/assets/wind.svg" alt="Logo" width="50" height="50" class="me-2">
+        <h2 class="text-bold m-0">BersihinAja</h2>
     </div>
 
-    <!-- Login Card -->
+
+
     <div class="login-card col-md-4 bg-white rounded-2 shadow p-3">
         <div class="text-center mb-4">
             <h4 class="mt-3">Sign in</h4>
@@ -56,9 +56,10 @@
         </form>
     </div>
 
-    <!-- Register Button -->
-<div class="d-grid gap-2 col-4 mx-auto mt-4 ">
-  <button class="btn btn-outline-secondary rounded-2" type="button">Sign up</button>
+<div class="d-grid gap-2 col-4 mx-auto mt-4">
+  <a class="btn btn-outline-secondary rounded-2" href="<?= base_url('pilih'); ?>">Sign up</a>
+
+
 </div>
 
     <!-- Bootstrap JS -->
