@@ -50,6 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @link		https://codeigniter.com/userguide3/libraries/config.html
  */
 #[\AllowDynamicProperties]
+
  class CI_Config {
 
 	/**
