@@ -36,6 +36,7 @@
  * @since	Version 1.0.0
  * @filesource
  */
+ 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -50,10 +51,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/userguide3/general/controllers.html
  */
+<<<<<<< HEAD
 
 #[\AllowDynamicProperties]
 
  class CI_Controller {
+=======
+class CI_Controller {
+>>>>>>> 314a87720368de59f2aa5c8ed0f3c9b065ca9858
 
 	/**
 	 * Reference to the CI singleton
