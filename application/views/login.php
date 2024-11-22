@@ -32,8 +32,6 @@
         <h2 class="text-bold m-0">BersihinAja</h2>
     </div>
 
-
-
     <div class="login-card col-md-4 bg-white rounded-2 shadow p-3">
         <div class="text-center mb-4">
             <h4 class="mt-3">Sign in</h4>

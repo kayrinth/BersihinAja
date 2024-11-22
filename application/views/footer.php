@@ -1,59 +1,49 @@
-<div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="login">Login</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form method="post" action="<?php echo base_url("welcome") ?>">
-                        <div class="mb-3">
-                            <label>Username</label>
-                            <input type="text" name="email_member" class="form-control" value="<?php echo set_value("email_member") ?>">
-                            <div class="text-danger small">
-                                <?php echo form_error("email_member") ?>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label>Password</label>
-                            <input type="password" name="password_member" class="form-control value="<?php echo set_value("password_member") ?>">
-                            <div class="text-danger small">
-                                <?php echo form_error("password_member") ?>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary">Login</button>
-                </form>
-      </div>
-      
+<!-- Footer -->
+<footer class="bg-light text-center text-lg-start">
+    <div class="container p-4">
+        <!-- Social Media Section -->
+        <section class="mb-4">
+            <a href="#" class="btn btn-link btn-floating btn-sm text-dark m-1" role="button" data-mdb-ripple-color="dark"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="btn btn-link btn-floating btn-sm text-dark m-1" role="button" data-mdb-ripple-color="dark"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="btn btn-link btn-floating btn-sm text-dark m-1" role="button" data-mdb-ripple-color="dark"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="btn btn-link btn-floating btn-sm text-dark m-1" role="button" data-mdb-ripple-color="dark"><i class="fab fa-linkedin"></i></a>
+        </section>
+
+        <!-- Footer Links -->
+        <section class="">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Tentang Kami</h5>
+                    <p>
+                        BersihinAja adalah layanan kebersihan profesional yang siap membantu Anda membersihkan rumah atau kantor dengan cepat dan mudah.
+                    </p>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Tautan</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-dark">Beranda</a></li>
+                        <li><a href="#" class="text-dark">Layanan</a></li>
+                        <li><a href="#" class="text-dark">Kontak</a></li>
+                        <li><a href="#" class="text-dark">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Hubungi Kami</h5>
+                    <p>
+                        Jl. Kebersihan No. 123<br>
+                        Jakarta, Indonesia<br>
+                        Email: info@bersihinaja.com<br>
+                        Telepon: +62 123-456-789
+                    </p>
+                </div>
+            </div>
+        </section>
     </div>
-  </div>
-</div>
 
-
-   <footer class="bg-light text-center py-3 mt-5">
-    	<div class="">copyright &copy; 2024. Amikom</div>
-    </footer>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src=" https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
-    <script>new DataTable("#tabelku");</script>
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-    <?php if ($this->session->flashdata('pesan_sukses')): ?>
-        <script>swal("Sukses!", "<?php echo $this->session->flashdata('pesan_sukses') ?>", "success");</script>
-    <?php endif ?>
-
-    <?php if ($this->session->flashdata('pesan_gagal')): ?>
-        <script>swal("Error!", "<?php echo $this->session->flashdata('pesan_gagal') ?>", "error");</script>
-    <?php endif ?>
-
-        <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-
-    <script >CKEDITOR.replace("editorku")</script>
-  </body>
-</html>
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2024 BersihinAja. Semua Hak Dilindungi.
+    </div>
+</footer>
