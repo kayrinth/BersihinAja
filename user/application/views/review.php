@@ -45,14 +45,18 @@
 </head>
 
 <body>
-
+    <div class="relative h-full w-full bg-cover bg-center p-20 "
+        style="background-image: url('/bersihinAja/user/assets/testimoni.png');">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="relative flex flex-col justify-center h-full ">
+            <h1 class="text-white text-4xl font-bold text-center">
+                Hasil Review dari Customer<br>Tercinta Kami
+            </h1>
+        </div>
+    </div>
 
     <section id="testimonials" class="p-10 mt-0">
         <div class="container py-5">
-            <div class="text-start mb-5">
-                <p class="text-[#80BCBD] text-2xl font-light">/ TESTIMONIALS</p>
-                <h1 class="font-bold text-6xl mb-2 text-start">Hasil Review<br>Customer Kami</h1>
-            </div>
             <div class="flex flex-row">
                 <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
                     <h5 class="mx-3 mt-3">Joni</h5>

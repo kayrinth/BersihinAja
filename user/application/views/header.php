@@ -34,7 +34,7 @@
           <a href="<?php echo base_url('home'); ?>" class="text-black text-sm font-medium">Home</a>
           <!-- <a href="#about-us" class="text-black text-sm font-medium">About Us</a> -->
           <!-- <a href="#choose-us" class="text-black text-sm font-medium">Why Us</a> -->
-          <a href="#services" class="text-black text-sm font-medium">Services</a>
+          <a href="<?php echo base_url('services'); ?>" class="text-black text-sm font-medium">Services</a>
           <a href="<?php echo base_url('praregist'); ?>" class="text-black text-sm font-medium">Our Team</a>
           <a href="<?php echo base_url('review'); ?>" class="text-black text-sm font-medium">Review</a>
         </div>
