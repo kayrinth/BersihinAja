@@ -155,50 +155,6 @@
       </div>
     </section>
 
-    <section id="services" class="p-10 mt-20">
-      <div class="container py-5">
-        <p class="text-[#80BCBD] text-2xl font-light">/ OUR SERVICES</p>
-        <div class="flex flex-row justify-between items-start mb-4">
-          <h1 class="text-start font-bold text-6xl mb-2">Pilih Paket Mu!</h1>
-          <button class="service-card bg-[#80BCBD] text-white py-2 px-4 rounded">Lihat Semua</button>
-        </div>
-
-        <div class="row g-4">
-          <!-- Card 1 -->
-          <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
-            <div class="flex justify-content-end flex-col text-center">
-              <img src="https://picsum.photos/200" alt="" class="w-full rounded-3 my-2">
-              <div class="icon">
-                <i class="bi bi-house"></i>
-              </div>
-              <h5>Home Cleaning</h5>
-              <p>Get your home cleaned by our professional cleaning team.</p>
-            </div>
-          </div>
-          <!-- Card 2 -->
-          <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3  mx-1">
-            <div class="flex justify-content-end flex-col text-center">
-              <img src="https://picsum.photos/200" alt="" class="w-full rounded-3 my-2">
-              <div class="icon">
-                <i class="bi bi-building"></i>
-              </div>
-              <h5>Office Cleaning</h5>
-              <p>Maintain your office environment clean and professional.</p>
-            </div>
-          </div>
-          <!-- Card 3 -->
-          <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3  mx-1">
-            <div class="flex justify-content-end flex-col text-center">
-              <img src="https://picsum.photos/200" alt="" class="w-full rounded-3 my-2">
-              <div class="icon">
-                <i class="bi bi-cup-straw"></i>
-              </div>
-              <h5>Kitchen Cleaning</h5>
-              <p>Ensure a spotless and hygienic kitchen for your family.</p>
-            </div>
-          </div>
-    </section>
-
     <section id="our-team" class="p-10 mt-20">
       <div class="container py-5 bg-[#F9F9FE] rounded-3">
         <div class="text-center mb-5">
@@ -237,7 +193,7 @@
         </div>
         <div class="bg-[#80BCBD] h-full w-full p-10 rounded-3 flex flex-col align-items-center mt-3 ">
           <h3 class="text-white font-bold text-3xl mb-6">Bergabunglah dengan Tim Impian Kebersihan Kami!</h3>
-          <a class=" service-card btn btn-light rounded-3" href="<?php echo base_url('register_pekerja') ?>">Bergabunglah Dengan Kami!</a>
+          <a class=" service-card btn btn-light rounded-3" href="<?php echo base_url('praregist') ?>">Bergabunglah Dengan Kami!</a>
         </div>
       </div>
 
