@@ -90,7 +90,7 @@
     </section>
 
 
-    <section id="choose-us" class="bg-[#F9F9FE] h-full w-full p-10 rounded-3 mt-20">
+    <section id="choose-us" class="bg-[#F9F9FE] h-full w-full p-10 rounded-3 mt-20 p-10 mt-20">
       <p class="text-[#80BCBD] text-2xl font-light">/ WHY CHOOSE US</p>
       <div class="flex flex-row justify-between items-start">
         <h2 class="text-6xl font-bold mb-4 text-start">Pilih Bersih, <br> Pilih BersihinAja</h2>
@@ -155,7 +155,7 @@
       </div>
     </section>
 
-    <section>
+    <section id="services" class="p-10 mt-20">
       <div class="container py-5">
         <p class="text-[#80BCBD] text-2xl font-light">/ OUR SERVICES</p>
         <div class="flex flex-row justify-between items-start mb-4">
@@ -197,8 +197,83 @@
               <p>Ensure a spotless and hygienic kitchen for your family.</p>
             </div>
           </div>
+    </section>
+
+    <section id="our-team" class="p-10 mt-20">
+      <div class="container py-5 bg-[#F9F9FE] rounded-3">
+        <div class="text-center mb-5">
+          <p class="text-[#80BCBD] text-2xl font-light">/ OUR TEAM</p>
+          <h1 class="font-bold text-6xl mb-2">Tim dari BersihinAja</h1>
+        </div>
+
+        <div class="flex justify-center row">
+          <div class="service-card col-md-3 w-full h-full shadow-md rounded-3 mx-1 py-3">
+            <div class="relative">
+              <img src="https://img.freepik.com/free-photo/portrait-volunteer-who-organized-donations-charity_23-2149230567.jpg?t=st=1732351129~exp=1732354729~hmac=371ed7652a85fd14f01f5f66bbf2cc121b70ef84f71e2dfd48e8287bc546332e&w=360"
+                alt="Home Cleaning" class="w-full h-full object-cover rounded-3">
+              <h5 class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 bg-white text-black text-sm font-bold px-4 py-2 rounded">
+                Susi Puji
+              </h5>
+            </div>
+          </div>
+          <div class="service-card col-md-3 w-full h-full shadow-md rounded-3 mx-1 py-3">
+            <div class="relative">
+              <img src="https://img.freepik.com/free-photo/portrait-volunteer-who-organized-donations-charity_23-2149230567.jpg?t=st=1732351129~exp=1732354729~hmac=371ed7652a85fd14f01f5f66bbf2cc121b70ef84f71e2dfd48e8287bc546332e&w=360"
+                alt="Home Cleaning" class="w-full h-full object-cover rounded-3">
+              <h5 class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 bg-white text-black text-sm font-bold px-4 py-2 rounded">
+                Susi Puji
+              </h5>
+            </div>
+          </div>
+          <div class="service-card col-md-3 w-full h-full shadow-md rounded-3 mx-1 py-3">
+            <div class="relative">
+              <img src="https://img.freepik.com/free-photo/portrait-volunteer-who-organized-donations-charity_23-2149230567.jpg?t=st=1732351129~exp=1732354729~hmac=371ed7652a85fd14f01f5f66bbf2cc121b70ef84f71e2dfd48e8287bc546332e&w=360"
+                alt="Home Cleaning" class="w-full h-full object-cover rounded-3">
+              <h5 class="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 bg-white text-black text-sm font-bold px-4 py-2 rounded">
+                Susi Puji
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div class="bg-[#80BCBD] h-full w-full p-10 rounded-3 flex flex-col align-items-center mt-3 ">
+          <h3 class="text-white font-bold text-3xl mb-6">Bergabunglah dengan Tim Impian Kebersihan Kami!</h3>
+          <a class=" service-card btn btn-light rounded-3" href="<?php echo base_url('register_pekerja') ?>">Bergabunglah Dengan Kami!</a>
+        </div>
+      </div>
 
     </section>
+
+    <section id="testimonials" class="p-10 mt-0">
+      <div class="container py-5">
+        <div class="text-start mb-5">
+          <p class="text-[#80BCBD] text-2xl font-light">/ TESTIMONIALS</p>
+          <h1 class="font-bold text-6xl mb-2 text-start">Hasil Review<br>Customer Kami</h1>
+        </div>
+        <div class="flex flex-row">
+          <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
+            <h5 class="mx-3 mt-3">Joni</h5>
+            <p class="mx-3">Home Cleaning</p>
+            <p class="mx-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis eaque dicta deleniti tempora doloribus?.</p>
+          </div>
+          <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
+            <h5 class="mx-3 mt-3">Joni</h5>
+            <p class="mx-3">Home Cleaning</p>
+            <p class="mx-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis eaque dicta deleniti tempora doloribus?.</p>
+          </div>
+          <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
+            <h5 class="mx-3 mt-3">Joni</h5>
+            <p class="mx-3">Home Cleaning</p>
+            <p class="mx-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis eaque dicta deleniti tempora doloribus?.</p>
+          </div>
+          <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
+            <h5 class="mx-3 mt-3">Joni</h5>
+            <p class="mx-3">Home Cleaning</p>
+            <p class="mx-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis eaque dicta deleniti tempora doloribus?.</p>
+          </div>
+        </div>
+      </div>
+  </div>
+  </section>
 
   </div>
 

@@ -24,9 +24,11 @@
         <div class="hidden sm:flex space-x-8">
           <a href="#" class="text-black text-sm font-medium">Home</a>
           <a href="#about-us" class="text-black text-sm font-medium">About Us</a>
-          <a href="#choose-us" class="text-black text-sm font-medium">Services</a>
-          <a href="#" class="text-black text-sm font-medium">Review</a>
-          <a href="#" class="text-black text-sm font-medium">Contact Us</a>
+          <a href="#choose-us" class="text-black text-sm font-medium">Why Us</a>
+          <a href="#services" class="text-black text-sm font-medium">Services</a>
+          <a href="#our-team" class="text-black text-sm font-medium">Our Team</a>
+          <a href="#testimonials" class="text-black text-sm font-medium">Review</a>
+
         </div>
 
         <!-- Login Button -->
