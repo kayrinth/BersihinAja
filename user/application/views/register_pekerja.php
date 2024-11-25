@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,18 +16,21 @@
             min-height: 100vh;
             background-color: #f9f9f9;
         }
+
         .custom-btn {
             background-color: #89c6b6;
             border: none;
         }
+
         .custom-btn:hover {
             background-color: #76b3a4;
         }
     </style>
 </head>
+
 <body>
 
-    
+
     <div class="text-center mb-4 d-flex align-items-center justify-content-center">
         <img src="/BersihinAja/user/assets/wind.svg" alt="Logo" width="50" height="50" class="me-2">
         <h2 class="text-bold m-0">BersihinAja</h2>
@@ -62,7 +66,7 @@
                     </span>
                 </div>
             </div>
-            <button type="submit" class="btn custom-btn w-100 mb-3 text-white">Log in</button>
+            <button type="submit" class="btn custom-btn text-white w-100 mb-3">Register</button>
         </form>
     </div>
 
@@ -86,4 +90,5 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </body>
+
 </html>
