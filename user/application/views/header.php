@@ -20,7 +20,28 @@
           </span>
         </div>
 
-        <!-- Hamburger Menu Button (Mobile) -->
+        <!-- Navigation Links -->
+        <div class="hidden sm:flex items-center space-x-8">
+          <a href="<?php echo base_url('home'); ?>" class="text-black text-sm font-medium">Home</a>
+          <a href="<?php echo base_url('services'); ?>" class="text-black text-sm font-medium">Services</a>
+          <a href="<?php echo base_url('review'); ?>" class="text-black text-sm font-medium">Review</a>
+
+          <!-- Nama User dan Tombol -->
+          <?php if ($this->session->userdata('id_customer')) : ?>
+            <span class="text-black text-sm font-medium">
+              <?php echo $this->session->userdata('username'); ?>
+            </span>
+            <a href="<?php echo base_url('auth/logout'); ?>" class="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition duration-200">
+              Logout
+            </a>
+          <?php else : ?>
+            <a href="<?php echo base_url('auth'); ?>" class="bg-[#80BCBD] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-500 transition duration-200">
+              Login
+            </a>
+          <?php endif; ?>
+        </div>
+
+        <!-- Mobile Hamburger Menu -->
         <div class="sm:hidden">
           <button id="menu-btn" class="text-gray-800 focus:outline-none">
             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -28,42 +49,32 @@
             </svg>
           </button>
         </div>
-
-        <!-- Navigation Links -->
-        <div id="menu-links" class="hidden sm:flex space-x-8">
-          <a href="<?php echo base_url('home'); ?>" class="text-black text-sm font-medium">Home</a>
-          <!-- <a href="#about-us" class="text-black text-sm font-medium">About Us</a> -->
-          <!-- <a href="#choose-us" class="text-black text-sm font-medium">Why Us</a> -->
-          <a href="<?php echo base_url('services'); ?>" class="text-black text-sm font-medium">Services</a>
-          <a href="<?php echo base_url('praregist'); ?>" class="text-black text-sm font-medium">Our Team</a>
-          <a href="<?php echo base_url('review'); ?>" class="text-black text-sm font-medium">Review</a>
-        </div>
-
-        <!-- Login Button -->
-        <div class="hidden sm:block">
-          <a href="/BersihinAja/user/" class="bg-[#80BCBD] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-500 transition duration-200">
-            Log in
-          </a>
-        </div>
       </div>
 
       <!-- Mobile Menu Links -->
       <div id="mobile-menu" class="hidden flex-col space-y-4 sm:hidden mt-4 text-center">
         <a href="<?php echo base_url('home'); ?>" class="text-black text-sm font-medium">Home</a>
-        <a href="#about-us" class="text-black text-sm font-medium">About Us</a>
-        <a href="#choose-us" class="text-black text-sm font-medium">Why Us</a>
-        <a href="#services" class="text-black text-sm font-medium">Services</a>
-        <a href="#our-team" class="text-black text-sm font-medium">Our Team</a>
-        <a href="#testimonials" class="text-black text-sm font-medium">Review</a>
-        <a href="/BersihinAja/user/" class="bg-[#80BCBD] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-500 transition duration-200 block">
-          Log in
-        </a>
+        <a href="<?php echo base_url('services'); ?>" class="text-black text-sm font-medium">Services</a>
+        <a href="<?php echo base_url('review'); ?>" class="text-black text-sm font-medium">Review</a>
+
+        <?php if ($this->session->userdata('id_customer')) : ?>
+          <span class="text-black text-sm font-medium">
+            <?php echo $this->session->userdata('username'); ?>
+          </span>
+          <a href="<?php echo base_url('auth/logout'); ?>" class="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition duration-200">
+            Logout
+          </a>
+        <?php else : ?>
+          <a href="<?php echo base_url('auth'); ?>" class="bg-[#80BCBD] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-500 transition duration-200">
+            Login
+          </a>
+        <?php endif; ?>
       </div>
     </div>
   </nav>
 
   <script>
-    // Toggle Menu Button
+    // Toggle Mobile Menu
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
 

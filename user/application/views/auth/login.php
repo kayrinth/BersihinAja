@@ -38,36 +38,36 @@
 
     <div class="login-card col-md-4 bg-white rounded-2 shadow p-3">
         <div class="text-center mb-4">
-            <h4 class="mt-3">Register Pekerja</h4>
+            <h4 class="mt-3">Sign in</h4>
         </div>
-        <form method="POST" action="login_process.php" class="m-4">
-            <div class="mb-3">
-                <label for="name" class="form-label">Username</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama " required>
-            </div>
+
+        <?= $this->session->flashdata('pesan_sukses'); ?>
+        <?= $this->session->flashdata('pesan_gagal'); ?>
+
+        <form method="POST" action="<?= base_url('auth'); ?>" class="m-4">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email " required>
-            </div>
-            <div class="mb-3">
-                <label for="alamat" class="form-label">Alamat</label>
-                <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan Alamat " required>
-            </div>
-            <div class="mb-3">
-                <label for="NoHp" class="form-label">No Telepon</label>
-                <input type="text" class="form-control" id="NoHp" name="NoHp" placeholder="Masukkan Nomor Telepon " required>
+                <input type="email" class="form-control" id="email_customer" name="email_customer" placeholder="Masukkan email" value="<?= set_value('email_customer'); ?>">
+                <?php echo form_error('email_customer', '<small class="text-danger">', '</small>'); ?>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <div class="input-group">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password">
                     <span class="input-group-text" onclick="togglePassword()">
                         <i class="fa fa-eye" id="togglePasswordIcon"></i>
                     </span>
                 </div>
+                <?php echo form_error('password', '<small class="text-danger">', '</small>'); ?>
             </div>
-            <button type="submit" class="btn custom-btn text-white w-100 mb-3">Register</button>
+            <button type="submit" class="btn custom-btn w-100 mb-3 text-white">Log in</button>
         </form>
+    </div>
+
+    <div class="d-grid gap-2 col-4 mx-auto mt-4">
+        <a class="btn btn-outline-secondary rounded-2" href="<?= base_url('pilih'); ?>">Sign up</a>
+
+
     </div>
 
     <!-- Bootstrap JS -->
