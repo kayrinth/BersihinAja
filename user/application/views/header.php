@@ -20,17 +20,21 @@
           </span>
         </div>
 
-        <!-- Navigation Links -->
-        <div class="hidden sm:flex items-center space-x-8">
+        <!-- Navigation Links (Centered) -->
+        <div class="hidden sm:flex items-center justify-center flex-1 space-x-8">
           <a href="<?php echo base_url('home'); ?>" class="text-black text-sm font-medium">Home</a>
           <a href="<?php echo base_url('services'); ?>" class="text-black text-sm font-medium">Services</a>
+          <a href="<?php echo base_url('praregist'); ?>" class="text-black text-sm font-medium">Our team</a>
           <a href="<?php echo base_url('review'); ?>" class="text-black text-sm font-medium">Review</a>
 
-          <!-- Nama User dan Tombol -->
+        </div>
+
+        <div class="flex items-end justify-center align-items-center">
           <?php if ($this->session->userdata('id_customer')) : ?>
-            <span class="text-black text-sm font-medium">
+            <button type="button" onclick="window.location.href='<?= base_url('auth/updateCustomer') ?>'" class="text-black text-sm font-medium mr-4">
               <?php echo $this->session->userdata('username'); ?>
-            </span>
+            </button>
+
             <a href="<?php echo base_url('auth/logout'); ?>" class="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition duration-200">
               Logout
             </a>
@@ -55,6 +59,7 @@
       <div id="mobile-menu" class="hidden flex-col space-y-4 sm:hidden mt-4 text-center">
         <a href="<?php echo base_url('home'); ?>" class="text-black text-sm font-medium">Home</a>
         <a href="<?php echo base_url('services'); ?>" class="text-black text-sm font-medium">Services</a>
+        <a href="<?php echo base_url('praregist'); ?>" class="text-black text-sm font-medium">Our team</a>
         <a href="<?php echo base_url('review'); ?>" class="text-black text-sm font-medium">Review</a>
 
         <?php if ($this->session->userdata('id_customer')) : ?>

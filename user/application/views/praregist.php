@@ -44,7 +44,7 @@
 
     <div class="bg-[#AAD9BB] w-full h-full p-10 text-center">
         <h1 class="text-white mb-4">Daftarkan Diri Anda Sekarang!!</h1>
-        <a class="bg-[#80BCBD] text-white p-3 rounded-3" href="<?php echo base_url('register_pekerja') ?>">Bergabunglah Dengan Kami!</a>
+        <a class="bg-[#80BCBD] text-white p-3 rounded-3" href="<?php echo base_url('auth/registPekerja') ?>">Bergabunglah Dengan Kami!</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

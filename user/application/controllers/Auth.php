@@ -10,9 +10,13 @@ class Auth extends CI_Controller
         $this->load->library('session');
         $this->load->helper('url');
     }
-
     public function index()
     {
+        // Cek apakah user sudah login, jika sudah redirect ke halaman home
+        if ($this->session->userdata('email_customer')) {
+            redirect('home');
+        }
+
         $this->form_validation->set_rules('email_customer', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
 
@@ -22,7 +26,6 @@ class Auth extends CI_Controller
             $this->_login();
         }
     }
-
 
 
     private function _login()
@@ -80,5 +83,54 @@ class Auth extends CI_Controller
             $this->session->set_flashdata('pesan_sukses', '<div class="alert alert-success" role="alert"> Selamat Akun Anda Berhasil Dibuat!, Silakan Login </div>');
             redirect('auth', 'refresh');
         }
+    }
+
+
+    public function registPekerja()
+    {
+        $this->form_validation->set_rules("username", "Username", "required|trim");
+        $this->form_validation->set_rules("email_pekerja", "Email", "required|trim|valid_email|is_unique[pekerja.Email_Pekerja]", ['is_unique' => 'Email sudah digunakan']);
+        $this->form_validation->set_rules("alamat_pekerja", "Alamat", "required|trim");
+        $this->form_validation->set_rules("No_Hp", "No Telepon", "required|numeric|trim");
+        $this->form_validation->set_rules("KTP", "KTP", "required|numeric|trim|min_length[16]|max_length[16]");
+        $this->form_validation->set_rules("password", "Password", "required|min_length[3]|trim");
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('auth/registPekerja');
+        } else {
+            $data = [
+                'Username' => $this->input->post('username'),
+                'Email_Pekerja' => $this->input->post('email_pekerja'),
+                'Alamat_Pekerja' => $this->input->post('alamat_pekerja'),
+                'No_Hp' => $this->input->post('No_Hp'),
+                'KTP' => $this->input->post('KTP'),
+                'Password' => sha1(trim($this->input->post('password')))
+            ];
+
+            $this->db->insert('pekerja', $data);
+            $this->session->set_flashdata('pesan_sukses', '<div class="alert alert-success" role="alert"> Selamat Akun Anda Berhasil Dibuat!, Silakan Login </div>');
+            redirect('auth', 'refresh');
+        }
+    }
+
+
+    public function updateCustomer()
+    {
+        $this->load->view('auth/updateCustomer');
+    }
+
+    public function logout()
+    {
+        //menghnacurkan tiker yang dibuat saat login tadi
+        $this->session->unset_userdata("id_customer");
+        $this->session->unset_userdata("email_customer");
+        $this->session->unset_userdata("username");
+        $this->session->unset_userdata("alamat_customer");
+        $this->session->unset_userdata("no_hp");
+
+
+        $this->session->set_flashdata('pesan_sukses', 'Anda telah logout');
+
+        redirect('auth', 'refresh');
     }
 }

@@ -16,10 +16,6 @@ class Home extends CI_Controller
 			redirect('auth');
 		}
 
-		$username = $this->session->userdata('username');
-
-		echo 'Selamat datang, ' . $username;
-
 		$data['user'] = $this->db->get_where('customer', ['Email_Customer' => $this->session->userdata('email_customer')])->row_array();
 
 
