@@ -64,8 +64,8 @@
     <div class="card text-center">
         <h5 class="mb-4">Siapa kamu?</h5>
         <div class="d-flex justify-content-around mb-4">
-            <button class="btn-choice font-extrabold text-white" onclick="location.href='register_customer';">customer</button>
-            <button class="btn-choice font-extrabold text-white" onclick="location.href='register_pekerja';">pekerja</button>
+            <button class="btn-choice font-extrabold text-white" onclick="location.href='auth/registCustomer';">customer</button>
+            <button class="btn-choice font-extrabold text-white" onclick="location.href='auth/registPekerja';">pekerja</button>
         </div>
     </div>
 

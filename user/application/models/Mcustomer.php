@@ -3,38 +3,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Mcustomer extends CI_Model
 {
-    function login($inputan)
+    public function getCustomerById($id_customer)
     {
-        $email = $inputan['email'];
-        $password = $inputan['password'];
-        $password = sha1($password);
-
-        //cek database
-        $this->db->where('email_customer', $email);
-        $this->db->where('password', $password);
-        $q = $this->db->get('customer');
-        $cekcus = $q->row_array();
-
-        //jika tidak kosong maka ada
-        if (!empty($cekcus)) {
-
-            $this->session->set_userdata("id_customer", $cekcus["id_customer"]);
-            $this->session->set_userdata("username", $cekcus["username"]);
-            return "ada";
-        } else {
-            return "gak ada";
-        }
+        return $this->db->get_where('customer', ['Id_Customer' => $id_customer])->row_array();
     }
 
-    public function __construct()
+    public function updateCustomer($id_customer, $data)
     {
-        parent::__construct();
-        $this->load->database();
+        $this->db->where('Id_Customer', $id_customer);
+        $this->db->update('customer', $data);
     }
 
-    public function register($data)
+    function tampil()
     {
 
-        return $this->db->insert('customer', $data);
+        //melakukan query
+        $q = $this->db->get("customer");
+
+        //pecah ke array
+        $d = $q->result_array();
+
+        return $d;
     }
 }

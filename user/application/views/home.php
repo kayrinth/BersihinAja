@@ -7,6 +7,7 @@
   <title>BersihinAja</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .header-section {
       position: relative;
@@ -45,7 +46,18 @@
 </head>
 
 <body>
-  <!-- Header Section -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    <?php if ($this->session->flashdata('pesan_sukses')): ?>
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: '<?= $this->session->flashdata('pesan_sukses'); ?>',
+        confirmButtonColor: '#89c6b6'
+      });
+    <?php endif; ?>
+  </script>
+
   <div class="header-section">
     <div class="header-overlay"></div>
     <div class="header-content">
@@ -53,7 +65,6 @@
       <h1 class="text-white text-7xl font-bold ml-56">Ruangan <br><span>Bersih Berkilau</span></h1>
     </div>
   </div>
-
 
   <div class="container py-5">
     <section id="about-us" class=" p-10 mt-20">

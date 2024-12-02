@@ -9,6 +9,7 @@ class Auth extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->helper('url');
+        $this->load->model('Mcustomer');
     }
     public function index()
     {
@@ -113,10 +114,35 @@ class Auth extends CI_Controller
         }
     }
 
-
     public function updateCustomer()
     {
-        $this->load->view('auth/updateCustomer');
+        // Validasi form
+        $this->form_validation->set_rules('username', 'Username', 'required');
+        $this->form_validation->set_rules('alamat_customer', 'Alamat', 'required');
+        $this->form_validation->set_rules('No_Hp', 'No Telepon', 'required|numeric');
+
+        if ($this->form_validation->run() == false) {
+            // Jika validasi gagal, kembalikan ke halaman update
+            $data['customer'] = $this->Mcustomer->getCustomerById($this->session->userdata('id_customer'));
+            $this->load->view('auth/updateCustomer', $data);
+        } else {
+            // Ambil data dari form
+            $id_customer = $this->session->userdata('id_customer');
+            $data = [
+                'Username' => $this->input->post('username'),
+                'Alamat_Customer' => $this->input->post('alamat_customer'),
+                'No_Hp' => $this->input->post('No_Hp'),
+                'Foto_Customer' => $this->input->post('foto')
+            ];
+
+            // Perbarui database
+            $this->Mcustomer->updateCustomer($id_customer, $data);
+
+            $this->session->set_userdata('username', $data['Username']);
+            $this->session->set_flashdata('pesan_sukses', 'Profil berhasil diperbarui!');
+
+            redirect('/');
+        }
     }
 
     public function logout()
@@ -129,7 +155,7 @@ class Auth extends CI_Controller
         $this->session->unset_userdata("no_hp");
 
 
-        $this->session->set_flashdata('pesan_sukses', 'Anda telah logout');
+        $this->session->set_flashdata('pesan_sukses', '<div class="alert alert-success" role="alert"> Anda Telah Berhasil Logout </div>');
 
         redirect('auth', 'refresh');
     }
