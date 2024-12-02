@@ -25,7 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 $config['base_url'] = 'http://localhost/BersihinAja/user';
 $config['pilih'] = 'http://localhost/BersihinAja/user/pilih';
-$config['register_pekerja'] = 'http://localhost/BersihinAja/user/register_pekerja';
+$config['registUser'] = 'http://localhost/BersihinAja/user/registUser';
 
 $config['Foto_Customer'] = $_SERVER['DOCUMENT_ROOT'] . "/BersihinAja/assets/foto_customer/";
 $config["url_customer"] = 'http://localhost/BersihinAja/assets/foto_customer/';

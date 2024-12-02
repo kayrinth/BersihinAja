@@ -47,8 +47,8 @@
         <form method="POST" action="<?= base_url('auth'); ?>" class="m-4">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email_customer" name="email_customer" placeholder="Masukkan email" value="<?= set_value('email_customer'); ?>">
-                <?php echo form_error('email_customer', '<small class="text-danger">', '</small>'); ?>
+                <input type="email" class="form-control" id="email_user" name="email_user" placeholder="Masukkan email" value="<?= set_value('email_user'); ?>">
+                <?php echo form_error('email_user', '<small class="text-danger">', '</small>'); ?>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
@@ -65,7 +65,7 @@
     </div>
 
     <div class="d-grid gap-2 col-4 mx-auto mt-4">
-        <a class="btn btn-outline-secondary rounded-2" href="<?= base_url('pilih'); ?>">Sign up</a>
+        <a class="btn btn-outline-secondary rounded-2" href="<?= base_url('auth/registUser'); ?>">Sign up</a>
 
 
     </div>

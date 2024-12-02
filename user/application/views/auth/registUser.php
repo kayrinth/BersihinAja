@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Pekerja</title>
+    <title>Register user</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -28,46 +28,52 @@
 </head>
 
 <body>
-    <div class="text-center mb-4 d-flex align-items-center justify-content-center mt-5">
+    <div class="text-center mb-4 d-flex align-items-center justify-content-center">
         <img src="/BersihinAja/user/assets/wind.svg" alt="Logo" width="50" height="50" class="me-2">
         <h2 class="text-bold m-0">BersihinAja</h2>
     </div>
 
-    <div class="login-card col-md-4 bg-white rounded-2 shadow p-3 mb-5">
+    <div class="login-card col-md-4 bg-white rounded-2 shadow p-3">
         <div class="text-center mb-4">
-            <h4 class="mt-3">Register Pekerja</h4>
+            <h4 class="mt-3">Register User</h4>
         </div>
-        <form method="POST" action="<?= base_url('auth/registPekerja') ?>" enctype="multipart/form-data">
-            <!-- <div class="mb-3">
-                <label for="foto_pekerja" class="form-label">Foto Pekerja</label>
-                <input type="file" class="form-control" id="foto_pekerja" name="foto_pekerja" required>
-                <?= form_error('foto_pekerja', '<small class="text-danger">', '</small>'); ?>
-            </div> -->
+        <?= $this->session->flashdata('pesan_gagal'); ?>
+        <form method="POST" action="<?php echo base_url('auth/registUser'); ?>" class="m-4">
             <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan nama" required>
-                <?= form_error('username', '<small class="text-danger">', '</small>'); ?>
+                <label for="Nama_User" class="form-label">Nama User</label>
+                <input type="text" class="form-control" id="Nama_User" name="Nama_User" placeholder="Masukkan nama" required <?= set_value('Nama_User') ?>>
+                <?php echo form_error('Nama_User', '<small class="text-danger">', '</small>'); ?>
             </div>
             <div class="mb-3">
-                <label for="email_pekerja" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email_pekerja" name="email_pekerja" placeholder="Masukkan email" required>
-                <?= form_error('email_pekerja', '<small class="text-danger">', '</small>'); ?>
+                <label for="Email_User" class="form-label">Email</label>
+                <input type="email" class="form-control" id="Email_User" name="Email_User" placeholder="Masukkan email" required <?= set_value(field: 'Email_User') ?>>
+                <?php echo form_error('Email_User', '<small class="text-danger">', '</small>'); ?>
             </div>
             <div class="mb-3">
-                <label for="KTP" class="form-label">KTP</label>
-                <input type="text" class="form-control" id="KTP" name="KTP" placeholder="Masukkan Nomor KTP" required>
-                <?= form_error('KTP', '<small class="text-danger">', '</small>'); ?>
-            </div>
-            <div class="mb-3">
-                <label for="alamat_pekerja" class="form-label">Alamat</label>
-                <input type="text" class="form-control" id="alamat_pekerja" name="alamat_pekerja" placeholder="Masukkan Alamat" required>
-                <?= form_error('alamat_pekerja', '<small class="text-danger">', '</small>'); ?>
+                <label for="Alamat_User" class="form-label">Alamat</label>
+                <input type="text" class="form-control" id="Alamat_User" name="Alamat_User" placeholder="Masukkan Alamat" required <?= set_value(field: 'Alamat_User') ?>>
+                <?php echo form_error('Alamat_User', '<small class="text-danger">', '</small>'); ?>
             </div>
             <div class="mb-3">
                 <label for="No_Hp" class="form-label">No Telepon</label>
-                <input type="number" class="form-control" id="No_Hp" name="No_Hp" placeholder="Masukkan Nomor Telepon" required>
-                <?= form_error('No_Hp', '<small class="text-danger">', '</small>'); ?>
+                <input type="number" class="form-control" id="No_Hp" name="No_Hp" placeholder="Masukkan Nomor Telepon" required <?= set_value('No_Hp') ?>>
+                <?php echo form_error('No_Hp', '<small class="text-danger">', '</small>'); ?>
             </div>
+            <div class="mb-3">
+                <label for="KTP" class="form-label">KTP</label>
+                <input type="number" class="form-control" id="KTP" name="KTP" placeholder="Masukkan Nomor Telepon" required <?= set_value('KTP') ?>>
+                <?php echo form_error('KTP', '<small class="text-danger">', '</small>'); ?>
+            </div>
+            <div class="mb-3">
+                <label for="role_id" class="form-label">Role</label>
+                <select id="role_id" name="role_id" class="form-select" required>
+                    <option value="" disabled selected>Pilih Role</option>
+                    <option value="pekerja" <?= set_select('role_id', 'pekerja'); ?>>pekerja</option>
+                    <option value="customer" <?= set_select('role_id', 'customer'); ?>>customer</option>
+                </select>
+                <?php echo form_error('role_id', '<small class="text-danger">', '</small>'); ?>
+            </div>
+
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <div class="input-group">

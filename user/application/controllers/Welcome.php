@@ -12,7 +12,6 @@ class Welcome extends CI_Controller
 
 	public function index()
 	{
-		// Jika sudah login, data pengguna akan disertakan, jika belum, data tidak ada
 		$data['user'] = null;
 		if ($this->session->userdata('email_customer')) {
 			$data['user'] = $this->db->get_where('customer', ['Email_Customer' => $this->session->userdata('email_customer')])->row_array();
@@ -20,7 +19,7 @@ class Welcome extends CI_Controller
 
 		// Render halaman home
 		$this->load->view('header');
-		$this->load->view('home', $data);
+		$this->load->view('customer/home');
 		$this->load->view('footer');
 	}
 }

@@ -30,16 +30,16 @@
         </div>
 
         <div class="flex items-end justify-center align-items-center">
-          <?php if ($this->session->userdata('id_customer')) : ?>
+          <?php if ($this->session->userdata('id_user')) : ?>
             <div class="">
 
             </div>
             <button type="button" onclick="window.location.href='<?= base_url('auth/updateCustomer') ?>'" class="flex text-black text-sm font-medium mr-4">
               <img
-                src="<?= $this->session->userdata('foto_customer'); ?>"
+                src="<?= $this->session->userdata('Foto_User'); ?>"
                 alt="Foto Customer"
                 class="object-cover w-full h-full h-28 w-28 rounded-full overflow-hidden mx-auto mr-3">
-              <?= $this->session->userdata('username'); ?>
+              <?= $this->session->userdata('Nama_User'); ?>
             </button>
             <a href="<?php echo base_url('auth/logout'); ?>" class="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition duration-200">
               Logout
