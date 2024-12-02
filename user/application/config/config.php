@@ -27,8 +27,8 @@ $config['base_url'] = 'http://localhost/BersihinAja/user';
 $config['pilih'] = 'http://localhost/BersihinAja/user/pilih';
 $config['registUser'] = 'http://localhost/BersihinAja/user/registUser';
 
-$config['Foto_Customer'] = $_SERVER['DOCUMENT_ROOT'] . "/BersihinAja/assets/foto_customer/";
-$config["url_customer"] = 'http://localhost/BersihinAja/assets/foto_customer/';
+$config['Foto_Customer'] = $_SERVER['DOCUMENT_ROOT'] . "/BersihinAja/user/assets/foto_customer/";
+$config["url_customer"] = 'http://localhost/BersihinAja/user/assets/foto_customer/';
 
 
 

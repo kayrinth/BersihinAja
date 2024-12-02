@@ -10,8 +10,27 @@ class Muser extends CI_Model
 
     public function updateuser($id_user, $data)
     {
+        // Filter data kosong
+        $data = array_filter($data, function ($value) {
+            return $value !== null && $value !== '';
+        });
+
+        // Cek apakah ada data untuk diupdate
+        if (empty($data)) {
+            return false;
+        }
+
+        // Update database
         $this->db->where('Id_User', $id_user);
-        $this->db->update('user', $data);
+        $update = $this->db->update('user', $data);
+
+        // Log error jika gagal
+        if (!$update) {
+            log_message('error', 'Gagal update user: ' . $this->db->error()['message']);
+            return false;
+        }
+
+        return true;
     }
 
     public function tampil()

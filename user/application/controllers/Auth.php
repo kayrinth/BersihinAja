@@ -107,33 +107,83 @@ class Auth extends CI_Controller
     }
 
 
-    public function updateuser()
+    public function updateUser()
     {
+        $id_user = $this->session->userdata('id_user');
+
+        $upload_path =
+            $this->config->item('Foto_Customer');
+
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0755, TRUE);
+        }
+
+        // Proses upload foto
+        $config['upload_path'] =
+            realpath($upload_path);
+        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+        $config['max_size'] = 2048; // 2MB
+        $config['file_name'] = 'user_' . $id_user . '_' . time();
+        $config['overwrite'] = TRUE;
+        $config['remove_spaces'] = TRUE;
+
+        $this->load->library('upload', $config);
+
         // Validasi form
-        $this->form_validation->set_rules('username', 'Username', 'required');
-        $this->form_validation->set_rules('alamat_user', 'Alamat', 'required');
-        $this->form_validation->set_rules('No_Hp', 'No Telepon', 'required|numeric');
+        $this->form_validation->set_rules('Nama_User', 'Nama User', 'trim');
+        $this->form_validation->set_rules('Alamat_User', 'Alamat User', 'trim');
+        $this->form_validation->set_rules('No_Hp', 'No Hp', 'numeric|trim|max_length[15]');
+        $this->form_validation->set_rules('password', 'Password', 'trim|min_length[3]');
 
         if ($this->form_validation->run() == false) {
             $data['user'] = $this->Muser->getuserById($this->session->userdata('id_user'));
             $this->load->view('auth/updateuser', $data);
         } else {
-            // Ambil data dari form
             $id_user = $this->session->userdata('id_user');
             $data = [
-                'Username' => $this->input->post('username'),
-                'Alamat_user' => $this->input->post('alamat_user'),
+                'Nama_User' => $this->input->post('Nama_User'),
+                'Alamat_User' => $this->input->post('Alamat_User'),
                 'No_Hp' => $this->input->post('No_Hp'),
-                'Foto_user' => $this->input->post('foto')
             ];
 
-            // Perbarui database
-            $this->Muser->updateuser($id_user, $data);
+            // Cek apakah ada file foto yang diupload
+            if (!empty($_FILES['foto']['name'])) {
+                if ($this->upload->do_upload('foto')) {
+                    $upload_data = $this->upload->data();
+                    $data['Foto_User'] = $upload_data['file_name'];
 
-            $this->session->set_userdata('username', $data['Username']);
-            $this->session->set_flashdata('pesan_sukses', 'Profil berhasil diperbarui!');
+                    var_dump($upload_data);
+                    var_dump($_FILES['foto']);
 
-            redirect('/');
+                    // Hapus foto lama
+                    $old_user = $this->Muser->getuserById($id_user);
+                    if (!empty($old_user['Foto_User'])) {
+                        $old_file_path = $this->config->item('Foto_Customer') . $old_user['Foto_User'];
+                        if (file_exists($old_file_path)) {
+                            unlink($old_file_path);
+                        }
+                    }
+                } else {
+                    $upload_error = $this->upload->display_errors();
+                    $this->session->set_flashdata('pesan_error', $upload_error);
+                    redirect('auth/updateUser');
+                }
+            }
+
+            // Update password jika diisi
+            if (!empty($this->input->post('password'))) {
+                $data['Password'] = sha1($this->input->post('password'));
+            }
+
+            // Proses update user
+            if ($this->Muser->updateuser($id_user, $data)) {
+                $this->session->set_userdata('Nama_User', $data['Nama_User']);
+                $this->session->set_flashdata('pesan_sukses', 'Profil berhasil diperbarui!');
+                redirect('home');
+            } else {
+                $this->session->set_flashdata('pesan_error', 'Gagal memperbarui profil');
+                redirect('auth/updateUser');
+            }
         }
     }
 

@@ -19,7 +19,7 @@ class Home extends CI_Controller
 		$data['user'] = $this->db->get_where('customer', ['Email_Customer' => $this->session->userdata('email_customer')])->row_array();
 
 
-		$this->load->view('header');
+		$this->load->view('header', $data);
 		$this->load->view('customer/home', $data);
 		$this->load->view('footer');
 	}
