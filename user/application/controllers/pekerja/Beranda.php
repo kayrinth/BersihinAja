@@ -9,6 +9,7 @@ class Beranda extends CI_Controller
         $this->output->set_header('Pragma: no-cache');
         $this->output->set_header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
+        $this->load->view('pekerja/header');
         $this->load->view('pekerja/beranda');
         $this->load->helper('url');
     }

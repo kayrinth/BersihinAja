@@ -22,7 +22,7 @@
 
         <!-- Navigation Links (Centered) -->
         <div class="hidden sm:flex items-center justify-center flex-1 space-x-8">
-          <a href="<?php echo base_url('home'); ?>" class="text-black text-sm font-medium">Home</a>
+          <a href="<?php echo base_url('/'); ?>" class="text-black text-sm font-medium">Home</a>
           <a href="<?php echo base_url('services'); ?>" class="text-black text-sm font-medium">Services</a>
           <a href="<?php echo base_url('praregist'); ?>" class="text-black text-sm font-medium">Our team</a>
           <a href="<?php echo base_url('review'); ?>" class="text-black text-sm font-medium">Review</a>

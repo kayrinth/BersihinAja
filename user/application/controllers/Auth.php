@@ -15,9 +15,9 @@ class Auth extends CI_Controller
     {
         if ($this->session->userdata('email_user')) {
             if ($this->session->userdata('role_id') == 'pekerja') {
-                redirect('beranda');
+                redirect('pekerja/beranda');
             } else {
-                redirect('home');
+                redirect('/');
             }
         }
 
@@ -52,9 +52,9 @@ class Auth extends CI_Controller
 
                 // Periksa Role_Id untuk menentukan redirect
                 if ($user['Role_Id'] == 'customer') {
-                    redirect('home');
+                    redirect('/');
                 } elseif ($user['Role_Id'] == 'pekerja') {
-                    redirect('beranda');
+                    redirect('pekerja/beranda');
                 } else {
                     $this->session->set_flashdata('error', 'Role tidak dikenali.');
                     redirect('auth');
@@ -179,7 +179,7 @@ class Auth extends CI_Controller
             if ($this->Muser->updateuser($id_user, $data)) {
                 $this->session->set_userdata('Nama_User', $data['Nama_User']);
                 $this->session->set_flashdata('pesan_sukses', 'Profil berhasil diperbarui!');
-                redirect('home');
+                redirect('pekerja/beranda');
             } else {
                 $this->session->set_flashdata('pesan_error', 'Gagal memperbarui profil');
                 redirect('auth/updateUser');
