@@ -3,9 +3,23 @@ class Mcustomer extends CI_Model
 {
     function tampilCustomer()
     {
-        $this->db->select('Id_User, Nama_User, Email_User, No_Hp');
-        $this->db->from('user');
-        $this->db->where('Role_Id', 'customer'); // Hanya customer
-        return $this->db->get()->result_array();
+		//melakukan query
+		$q = $this->db->get("user");
+		$d = $q->result_array();
+		
+		return $d;
     }
+
+    function detail($id_user): mixed {
+        $this->db->where('Id_User', $id_user);
+    
+        // Melakukan query
+        $q = $this->db->get("user");
+    
+        // Mengambil baris pertama (satu data)
+        $d = $q->row_array();
+    
+        return $d;
+    }
+
 }

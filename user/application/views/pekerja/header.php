@@ -2,72 +2,156 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Sidebar</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Ensure content doesn't get hidden behind sidebar on larger screens */
-        @media (min-width: 640px) {
-            #main-content {
-                margin-left: 16rem;
-                /* 64 * 0.25rem = 16rem, matching sidebar width */
-                width: calc(100% - 16rem);
-                max-width: 1200px;
-            }
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Material Design for Bootstrap</title>
 
-        #main-content {
-            padding: 1rem;
-        }
-    </style>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="<?php echo base_url('/assets/css/admin.css'); ?>" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+  crossorigin="anonymous"></script>
+  
+    
 </head>
 
-<body class="bg-gray-100">
+<body>
+  <!--Main Navigation-->
+  <header>
+    <!-- Sidebar -->
+    <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+      <div class="position-sticky">
+        <div class="list-group list-group-flush mx-3 mt-4">
+        <a href="<?php echo base_url("pekerja/beranda") ?>" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+          <i class="fas fa-house fa-fw me-3">
+          </i><span>Beranda</span>
+        </a>
+        
+        <a href="<?php echo base_url("layanan") ?>" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fas fa-list-check fa-fw me-3">
+          </i><span>Pembayaran</span>
+        </a>
 
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <div id="sidebar" class="bg-white w-64 h-full shadow-lg fixed z-30 transform -translate-x-full sm:translate-x-0 transition-transform duration-300">
-            <div class="p-4 flex items-center">
-                <img src="/bersihinAja/user/assets/wind.svg" alt="logo" class="h-6 mr-2">
-                <span class="text-2xl font-bold text-gray-800">BersihinAja</span>
-            </div>
-            <nav class="mt-6">
-                <a href="<?php echo base_url('pekerja/beranda'); ?>" class="block py-2.5 px-4 text-gray-700 rounded hover:bg-gray-200">Home</a>
-                <a href="<?php echo base_url('pekerja/transaksi'); ?>" class="block py-2.5 px-4 text-gray-700 rounded hover:bg-gray-200">Transaksi</a>
-                <a href="<?php echo base_url('pekerja/customer'); ?>" class="block py-2.5 px-4 text-gray-700 rounded hover:bg-gray-200">Customer</a>
-                <a href="<?php echo base_url('pekerja/review'); ?>" class="block py-2.5 px-4 text-gray-700 rounded hover:bg-gray-200">Review</a>
-            </nav>
-            <div class="mt-6 px-4">
-                <?php if ($this->session->userdata('id_user')) : ?>
-                    <button type="button" onclick="window.location.href='<?= base_url('auth/updateUser') ?>'" class="block w-full text-left py-2.5 px-4 bg-gray-200 rounded text-gray-700">
-                        <?= $this->session->userdata('Nama_User'); ?>
-                    </button>
-                    <a href="<?php echo base_url('auth/logout'); ?>" class="block py-2.5 px-4 bg-red-500 text-white rounded hover:bg-red-600 mt-2">Logout</a>
-                <?php else : ?>
-                    <a href="<?php echo base_url('auth'); ?>" class="block py-2.5 px-4 bg-[#80BCBD] text-white rounded hover:bg-teal-500">Login</a>
-                <?php endif; ?>
-            </div>
+        <a href="<?php echo base_url("pekerja/transaksi") ?>" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-hand-holding-dollar fa-fw me-3">
+          </i><span>Transaksi</span>
+        </a>
+
+        <a href="<?php echo base_url("pekerja/customer") ?>" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-user fa-fw me-3">
+          </i><span>Customers</span>
+        </a>
+
+
         </div>
+      </div>
+    </nav>
+    <!-- Sidebar -->
+
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-collapse-init data-mdb-target="#sidebarMenu"
+          aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">
+          <span class="text-2xl font-bold text-gray-800 flex items-center">
+            <img src="<?php echo base_url('/assets/image/wind.svg'); ?>" alt="logo" class="h-6 mr-2">
+            BersihinAja
+          </span>
+          
+        </a>
+        <!-- Search form -->
+        <form class="d-none d-md-flex input-group w-auto my-auto">
+          <input autocomplete="off" type="search" class="form-control rounded"
+            placeholder='Search (ctrl + "/" to focus)' style="min-width: 225px" />
+          <span class="input-group-text border-0"><i class="fas fa-search"></i></span>
+        </form>
+        <!-- Search form -->
+
+        <!-- Right links -->
+        <ul class="navbar-nav ms-auto d-flex flex-row">
+          <!-- Notification dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
+              role="button" data-mdb-dropdown-init aria-expanded="false">
+              <i class="fas fa-bell"></i>
+              <span class="badge rounded-pill badge-notification bg-danger">1</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Some news</a></li>
+              <li><a class="dropdown-item" href="#">Another news</a></li>
+              <li>
+                <a class="dropdown-item" href="#">Something else</a>
+              </li>
+            </ul>
+          </li>
+          <!-- Notification dropdown -->
+
+        <!-- Top Right Navigation (avatar) -->
+        <li class="nav-item dropdown">
+            <?php if ($this->session->userdata('id_user')) : ?>
+                <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#"
+                id="navbarDropdownMenuLink" role="button" data-mdb-dropdown-init aria-expanded="false">
+                <?= $this->session->userdata('Nama_User') ?>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                <li>
+                    <a class="dropdown-item" href="<?= base_url('auth/updateUser') ?>">
+                    <i class="fas fa-user-circle me-2"></i> My profile
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#">
+                    <i class="fas fa-cog me-2"></i> Settings
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="<?= base_url('auth/logout') ?>">
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                </li>
+                </ul>
+            <?php else : ?>
+                <a class="nav-link text-success" href="<?= base_url('auth') ?>">
+                <i class="fas fa-sign-in-alt me-2"></i> Login
+                </a>
+            <?php endif; ?>
+        </li>
+        <!-- Top Right Navigation (avatar) -->
+
+        </ul>
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+  <!--Main Navigation-->
+
+  <!--Main layout-->
+  <main >
+    <div class="container pt-4">
+        <!-- Section: Dynamic Content -->
+
+        <!-- Section: Dynamic Content -->
     </div>
-    <main>
-        <div class="container pt-4">
-            <!-- Section: Dynamic Content -->
-
-            <!-- Section: Dynamic Content -->
-        </div>
-    </main>
-
-    <script>
-        // Toggle Sidebar for Mobile
-        const menuBtn = document.getElementById('menu-btn');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
-
-        menuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full');
-        });
-    </script>
+  </main>
+  <!--Main layout-->
+  <!-- MDB -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.umd.min.js"></script>
+  <script src="<?php echo base_url('/assets/js/admin.js'); ?>"></script>
 
 </body>
 
