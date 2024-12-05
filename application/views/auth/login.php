@@ -32,7 +32,7 @@
 
 
     <div class="text-center mb-4 d-flex align-items-center justify-content-center">
-        <img src="/BersihinAja/user/assets/wind.svg" alt="Logo" width="50" height="50" class="me-2">
+        <img src="/BersihinAja/assets/wind.svg" alt="Logo" width="50" height="50" class="me-2">
         <h2 class="text-bold m-0">BersihinAja</h2>
     </div>
 
