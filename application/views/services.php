@@ -27,7 +27,7 @@
 <body>
   <!-- Header Section -->
   <div class="relative h-full w-full bg-cover bg-center p-20"
-    style="background-image: url('/bersihinAja/assets/service.png');">
+    style="background-image: url('./assets/service.png');">
     <div class="absolute inset-0 bg-black opacity-50"></div>
     <div class="relative flex flex-col justify-center h-full ">
       <h1 class="text-white text-4xl font-bold text-center">
@@ -42,21 +42,24 @@
       <div class="flex flex-row">
         <?php foreach ($services as $s): ?>
           <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
-            <div class="flex justify-content-end flex-col text-center">
-              <img src="https://picsum.photos/200" alt="" class="w-full rounded-3 my-2">
-              <h5><?= $s['Nama_Layanan']; ?></h5>
-              <h2>
-                <span class="text-[#80BCBD] text-lg">Rp</span>
-                <span class="text-4xl"><?= number_format($s['Harga'], 0, ',', '.'); ?></span>
-              </h2>
-              <p class="text-lg">Untuk ukuran ruangan <span class="text-[#80BCBD] font-bold"> <?= $s['Ukuran_Ruangan']; ?> m<sup>2</sup></span></p>
-              <p>
-                <span class="text-lg">Maksimal pengerjaan <?= $s['Maksimal_Jam']; ?> jam</span><br>
-                <span class="text-sm">(Est. <?= $s['Estimasi']; ?>)</span>
-              </p>
-              <p class="text-lg"><?= $s['Jumlah_Cleaner']; ?> Cleaner</p>
-            </div>
+            <a href="<?= base_url('service_detail?id=' . $s['Id_Services']); ?>" class="text-decoration-none">
+              <div class="flex justify-content-end flex-col text-center">
+                <img src="<?= base_url('./assets/layanan/' . $s['Foto_Layanan']); ?>" alt="<?= $s['Nama_Layanan']; ?>" class="w-full rounded-3 my-2">
+                <h5><?= $s['Nama_Layanan']; ?></h5>
+                <h2>
+                  <span class="text-[#80BCBD] text-lg">Rp</span>
+                  <span class="text-4xl"><?= number_format($s['Harga'], 0, ',', '.'); ?></span>
+                </h2>
+                <p class="text-lg">Untuk ukuran ruangan <span class="text-[#80BCBD] font-bold"> <?= $s['Ukuran_Ruangan']; ?> m<sup>2</sup></span></p>
+                <p>
+                  <span class="text-lg">Maksimal pengerjaan <?= $s['Maksimal_Jam']; ?> jam</span><br>
+                  <span class="text-sm">(Est. <?= $s['Estimasi']; ?>)</span>
+                </p>
+                <p class="text-lg"><?= $s['Jumlah_Cleaner']; ?> Cleaner</p>
+              </div>
+            </a>
           </div>
+
         <?php endforeach; ?>
         <!-- <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
           <div class="flex justify-content-end flex-col text-center">

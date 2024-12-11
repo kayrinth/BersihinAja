@@ -1,19 +1,18 @@
 <div class="container py-4">
 	<div class="row">
 		<div class="col-md-6">
-			<!-- Gambar Produk -->
-			<img src="/bersihinAja/assets/6856377.png" class="w-100">
-		
+			<!-- Gambar Layanan -->
+			<img src="<?= base_url('./assets/layanan/' . $detail_layanan['Foto_Layanan']); ?>" class="w-100" alt="<?= $detail_layanan['Nama_Layanan']; ?>">
 		</div>
 		<div class="col-md-6">
-			<!-- Informasi Produk -->
-			<h1 class="fw-bold">Nama Produk</h1>
-			<span class="badge bg-primary">Kategori Produk</span>
-			<p class="fs-4 mt-3 text-success">Rp <?= number_format(100000, 0, ',', '.'); ?></p>
+			<!-- Informasi Layanan -->
+			<h1 class="fw-bold"><?= $detail_layanan['Nama_Layanan']; ?></h1>
+			<span class="badge bg-primary">Ukuran: <?= $detail_layanan['Ukuran_Ruangan']; ?> m<sup>2</sup></span>
+			<p class="fs-4 mt-3 text-success">Rp <?= number_format($detail_layanan['Harga'], 0, ',', '.'); ?></p>
 
-			<!-- Form Pembelian -->
-			<?php if (true): // Ganti kondisi ini sesuai dengan logika login Anda ?>
-				<form method="post" action="<?= base_url('produk/beli'); ?>" class="my-3">
+			<!-- Form Pemesanan -->
+			<?php if ($this->session->userdata('logged_in')): ?>
+				<form method="post" action="<?= base_url('service_detail/order'); ?>" class="my-3">
 					<!-- Input Jumlah -->
 					<div class="mb-3">
 						<label for="jumlah" class="form-label">Jumlah</label>
@@ -32,13 +31,16 @@
 						</select>
 					</div>
 
-					<!-- Tombol Beli -->
-					<button type="submit" class="btn btn-primary w-100">Beli Sekarang</button>
+					<!-- Tombol Pesan -->
+					<button type="submit" class="btn btn-primary w-100">Pesan Sekarang</button>
 				</form>
+			<?php else: ?>
+				<p class="text-danger">Silakan login untuk memesan layanan ini.</p>
 			<?php endif; ?>
 
-			<!-- Deskripsi Produk -->
-			<p class="mt-4">Deskripsi lengkap produk akan ditampilkan di sini.</p>
+			<!-- Deskripsi Layanan -->
+			<p class="mt-4">Estimasi pengerjaan: <?= $detail_layanan['Estimasi']; ?> jam.</p>
+			
 		</div>
 	</div>
 </div>
