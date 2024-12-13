@@ -33,6 +33,21 @@ class Muser extends CI_Model
         return true;
     }
 
+    function getPekerjaByAlamat($alamat)
+    {
+        $this->db->select('Id_User, Nama_User, Email_User, Alamat_User, No_Hp, Foto_User');
+        $this->db->from('user');
+        $this->db->where('Role_Id', 'pekerja');
+        $this->db->where('Alamat_User', $alamat);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            log_message('error', 'Tidak ada data pekerja di wilayah ' . $alamat . ': ' . $this->db->last_query());
+            return [];
+        }
+    }
 
     function tampilPekerja()
     {
