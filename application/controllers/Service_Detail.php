@@ -44,33 +44,97 @@ class Service_Detail extends CI_Controller
         // Ambil data dari formulir
         $selected_paket = $this->input->post('paket');
         $selected_pekerja = $this->input->post('selected_pekerja');
-
         $id_services = $this->input->post('id_services');
-        $detail_layanan = $this->Mservice_detail->getServiceDetail($id_services);
+        $id_user = $this->session->userdata('id_user');
 
-        $paket_detail = [];
+        if (empty($paket)) {
+            // Jika tidak ada paket dipilih
+            $paket = []; // Inisialisasi sebagai array kosong
+        }
+
+
+        // Validasi jumlah pekerja berdasarkan ID layanan
+        $maxSelection = 0;
+        switch ($id_services) {
+            case 1:
+                $maxSelection = 1;
+                break;
+            case 2:
+                $maxSelection = 3;
+                break;
+            default:
+                $maxSelection = PHP_INT_MAX;
+                break;
+        }
+
+        if (count($selected_pekerja) > $maxSelection) {
+            $this->session->set_flashdata('error', "Maksimal hanya $maxSelection pekerja yang dapat dipilih.");
+            redirect('service_detail?id=' . $id_services);
+            return;
+        }
+
+        // Looping untuk menyimpan data ke database (tabel paket_pemesanan)
         if (!empty($selected_paket)) {
             foreach ($selected_paket as $id_paket) {
-                $paket_detail[] = $this->Mservice_detail->getPackageById($id_paket);
+                $paket_data = [
+                    'Id_Services' => $id_services,
+                    'Id_Paket' => $id_paket,
+                    'Id_User' => $id_user // Tambahkan ID Customer
+                ];
+
+                // Simpan data ke database lewat model
+                $this->Mservice_detail->insertPaketPemesanan($paket_data);
             }
         }
 
-        $pekerja_detail = [];
-        if (!empty($selected_pekerja)) {
-            foreach ($selected_pekerja as $id_pekerja) {
-                $pekerja_detail[] = $this->Muser->getUserById($id_pekerja);
-            }
-        }
-
-        // Siapkan data untuk ditampilkan di nota
-        $data['detail_layanan'] = $detail_layanan;
-        $data['paket_detail'] = $paket_detail;
-        $data['pekerja_detail'] = $pekerja_detail;
-
-        // Load tampilan nota
-        $this->load->view('header');
-        $this->load->view('nota_pemesanan', $data);
-        $this->load->view('footer');
+        // Redirect dengan pesan sukses
+        $this->session->set_flashdata('success', 'Pemesanan berhasil!');
+        redirect('service_detail?id=' . $id_services);
     }
 
+
+    public function saveOrder()
+    {
+        // Ambil data dari form
+        $id_services = $this->input->post('id_services');
+        $selected_paket = $this->input->post('paket');
+        $selected_pekerja = $this->input->post('selected_pekerja');
+        $alamat = $this->input->post('alamat');
+        $id_user = $this->session->userdata('id_user');
+
+        // Ambil detail layanan
+        $detail_layanan = $this->Mservice_detail->getServiceDetail($id_services);
+
+        // Hitung total harga
+        $total_harga = $detail_layanan['Harga'];
+        if (!empty($selected_paket)) {
+            $paket_harga = array_sum(array_map(function ($id_paket) {
+                $paket = $this->Mservice_detail->getPackageById($id_paket);
+                return $paket['Harga'];
+            }, $selected_paket));
+            $total_harga += $paket_harga;
+        }
+
+        $order_data = [
+            'Id_Jenis_Layanan' => $id_services,
+            'Id_Pemesanan' => $id_user,
+            'Total' => $total_harga,
+            'Status_Pembayaran' => 'Pending',
+            'Alamat' => $alamat,
+            'Tanggal_Order' => date('Y-m-d H:i:s'),
+            'Ulasan' => null,
+            'Jumlah_Rating' => null,
+        ];
+
+        // Simpan ke database
+        $order_id = $this->Mservice_detail->saveOrder($order_data);
+
+        if ($order_id) {
+            $this->session->set_flashdata('success', 'Pesanan berhasil disimpan.');
+            redirect('services');
+        } else {
+            $this->session->set_flashdata('error', 'Pesanan gagal disimpan.');
+            redirect('service_detail?id=' . $id_services);
+        }
+    }
 }

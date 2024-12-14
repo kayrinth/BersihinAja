@@ -25,4 +25,13 @@ class Mservice_detail extends CI_Model
         $query = $this->db->get('paket_layanan');
         return $query->row_array();
     }
+    public function insertPaketPemesanan($data)
+    {
+        $this->db->insert('paket_pemesanan', $data);
+    }
+    public function saveOrder($data)
+    {
+        $this->db->insert('detail_pemesanan', $data);
+        return $this->db->insert_id(); // Mengembalikan ID pesanan yang baru disimpan
+    }
 }
