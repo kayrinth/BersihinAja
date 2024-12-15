@@ -25,10 +25,4 @@ class Mservice_detail extends CI_Model
         $query = $this->db->get('paket_layanan');
         return $query->row_array();
     }
-
-    public function saveOrderDetails($data)
-    {
-        $this->db->insert_batch('detail_pemesanan', $data);
-    }
-
 }

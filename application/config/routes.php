@@ -55,3 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 
 //untuk kondisi user belum login atau role_id tidak sesuai
 $route['no_access'] = 'no_access/index';
+$route['service_detail/saveOrder'] = 'Service_Detail/saveOrder';

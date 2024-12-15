@@ -2,6 +2,17 @@
     <div class="card shadow border-0 p-4">
         <h1 class="fw-bold text-primary mb-4">Nota Pemesanan</h1>
 
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="fw-bold">Detail Pelanggan</h3>
+                <p><strong>Customer ID:</strong> <?= isset($user_data['Id_User']) ? $user_data['Id_User'] : 'N/A'; ?></p>
+                <p><strong>Nama:</strong> <?= isset($user_data['Nama_User']) ? $user_data['Nama_User'] : 'N/A'; ?></p>
+                <p><strong>Email:</strong> <?= isset($user_data['Email_User']) ? $user_data['Email_User'] : 'N/A'; ?></p>
+                <p><strong>Alamat:</strong> <?= isset($user_data['Alamat_User']) ? $user_data['Alamat_User'] : 'N/A'; ?></p>
+            </div>
+        </div>
+
+
         <!-- Detail Layanan -->
         <div class="card mb-4">
             <div class="card-body">
@@ -70,29 +81,17 @@
         <!-- Tombol -->
         <form action="<?= base_url('service_detail/saveOrder'); ?>" method="post">
             <input type="hidden" name="id_services" value="<?= $detail_layanan['Id_Services']; ?>">
-            
-            <!-- Input Alamat -->
-            <div class="mb-4">
-                <label for="alamat" class="form-label">Alamat Pemesanan</label>
-                <textarea name="alamat" id="alamat" rows="3" class="form-control" required></textarea>
-            </div>
-            
-            <!-- Kirim ID Paket -->
-            <?php if (!empty($paket_detail)): ?>
-                <?php foreach ($paket_detail as $paket): ?>
-                    <input type="hidden" name="paket[]" value="<?= $paket['Id_Paket']; ?>">
-                <?php endforeach; ?>
-            <?php endif; ?>
-            
-            <!-- Kirim ID Pekerja -->
-            <?php if (!empty($pekerja_detail)): ?>
-                <?php foreach ($pekerja_detail as $pekerja): ?>
-                    <input type="hidden" name="selected_pekerja[]" value="<?= $pekerja['Id_User']; ?>">
-                <?php endforeach; ?>
-            <?php endif; ?>
+            <input type="hidden" name="alamat" value="<?= isset($user_data['Alamat_User']) ? $user_data['Alamat_User'] : ''; ?>">
 
-            <!-- Tombol Submit -->
-            <button type="submit" class="btn btn-primary w-100">Submit Pesanan</button>
+            <?php foreach ($paket_detail as $paket): ?>
+                <input type="hidden" name="paket[]" value="<?= $paket['Id_Paket']; ?>">
+            <?php endforeach; ?>
+
+            <?php foreach ($pekerja_detail as $pekerja): ?>
+                <input type="hidden" name="selected_pekerja[]" value="<?= $pekerja['Id_User']; ?>">
+            <?php endforeach; ?>
+
+            <button type="submit" class="btn btn-primary w-100 mb-3">Submit Pesanan</button>
         </form>
 
 
