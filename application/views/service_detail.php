@@ -36,7 +36,7 @@
 		<!-- Kolom Formulir Pemesanan -->
 		<div class="col-md-6">
 			<div class="px-3">
-				<form method="post" action="<?= base_url('service_detail/order'); ?>" class="mt-4">
+				<form method="post" action="<?= base_url('service_detail/order?id=' . $detail_layanan['Id_Services']); ?>" class="mt-4">
 					<input type="hidden" name="id_services" value="<?= $detail_layanan['Id_Services']; ?>">
 
 					<!-- Pilih Paket -->
@@ -128,21 +128,20 @@
 	}
 
 	function validateBeforeSubmit() {
-			// Validasi minimal 1 pekerja dipilih
-			if (selectedIds.length === 0) {
-				alert("Anda wajib memilih minimal satu pekerja!");
-				return false;
-			}
-			return true;
+		// Validasi minimal 1 pekerja dipilih
+		if (selectedIds.length === 0) {
+			alert("Anda wajib memilih minimal satu pekerja!");
+			return false;
 		}
+		return true;
+	}
 
-		// Tambahkan event listener submit form
-		document.querySelector('form').addEventListener('submit', function(e) {
-			if (!validateBeforeSubmit()) {
-				e.preventDefault(); // Stop submit jika validasi gagal
-			}
-		});
-
+	// Tambahkan event listener submit form
+	document.querySelector('form').addEventListener('submit', function(e) {
+		if (!validateBeforeSubmit()) {
+			e.preventDefault(); // Stop submit jika validasi gagal
+		}
+	});
 </script>
 
 

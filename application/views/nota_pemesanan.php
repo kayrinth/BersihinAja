@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'midtrans-php/Midtrans.php';
 
 // Set your Merchant Server Key
@@ -10,15 +10,17 @@ include 'midtrans-php/Midtrans.php';
 // Set 3DS transaction for credit card to true
 \Midtrans\Config::$is3ds = true;
 
-$params = array(
-'transaction_details' => array(
-    'order_id' => rand(),
-    'gross_amount' => 94000,
-    )
-);
+
+$total_harga = $detail_layanan['Harga'];
+if (!empty($paket_detail)) {
+    foreach ($paket_detail as $paket) {
+        $total_harga += $paket['Harga'];
+    }
+}
 
 $params['transaction_details']['order_id'] = $detail_pemesanan['Id_Detail_Pemesanan'];
-$params['transaction_details']['gross_amount'] = $detail_pemesanan['Total'];
+$params['transaction_details']['gross_amount'] = $total_harga;
+$snapToken = \Midtrans\Snap::getSnapToken($params);
 ?>
 
 <div class="container py-5">
@@ -114,10 +116,34 @@ $params['transaction_details']['gross_amount'] = $detail_pemesanan['Total'];
                 <input type="hidden" name="selected_pekerja[]" value="<?= $pekerja['Id_User']; ?>">
             <?php endforeach; ?>
 
-            <button type="submit" class="btn btn-primary w-100 mb-3">Submit Pesanan</button>
+            <button type="button" class="btn btn-primary w-100 mb-3" id="pay-button">Submit Pesanan</button>
+            <pre><div id="result-json">JSON result will appear here after payment:<br></div></pre>
         </form>
-
-
         <a href="<?= base_url('services'); ?>" class="btn btn-secondary w-100">Kembali</a>
     </div>
 </div>
+
+<!-- TODO: Remove ".sandbox" from script src URL for production environment. Also input your client key in "data-client-key" -->
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-D-4z0cOLlQa1lamX"></script>
+<script type="text/javascript">
+    document.getElementById('pay-button').onclick = function() {
+        // SnapToken acquired from previous step
+        snap.pay('<?= $snapToken ?>', {
+            // Optional
+            onSuccess: function(result) {
+                /* You may add your own js here, this is just example */
+                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            },
+            // Optional
+            onPending: function(result) {
+                /* You may add your own js here, this is just example */
+                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            },
+            // Optional
+            onError: function(result) {
+                /* You may add your own js here, this is just example */
+                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            }
+        });
+    };
+</script>

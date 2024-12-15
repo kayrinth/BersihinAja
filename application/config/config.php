@@ -27,20 +27,21 @@ $config['base_url'] = 'http://localhost/BersihinAja/';
 $config['pilih'] = 'http://localhost/BersihinAja/pilih';
 $config['registUser'] = 'http://localhost/BersihinAja/registUser';
 
+
 $config['Foto_Customer'] = $_SERVER['DOCUMENT_ROOT'] . "/BersihinAja/assets/foto_customer/";
 $config["url_customer"] = 'http://localhost/BersihinAja/assets/foto_customer/';
 
 
-$config['assets_layanan'] = $_SERVER['DOCUMENT_ROOT']."/BersihinAja/assets/layanan/";
+$config['assets_layanan'] = $_SERVER['DOCUMENT_ROOT'] . "/BersihinAja/assets/layanan/";
 $config["url_layanan"] = 'http://localhost/BersihinAja/assets/layanan/';
 
-$config['assets_produk'] = $_SERVER["DOCUMENT_ROOT"]."/BersihinAja/assets/produk/";
+$config['assets_produk'] = $_SERVER["DOCUMENT_ROOT"] . "/BersihinAja/assets/produk/";
 $config["url_produk"] = 'http://localhost/BersihinAja/assets/produk/';
 
-$config['assets_slider'] = $_SERVER["DOCUMENT_ROOT"]."/BersihinAja/assets/slider/";
+$config['assets_slider'] = $_SERVER["DOCUMENT_ROOT"] . "/BersihinAja/assets/slider/";
 $config["url_slider"] = 'http://localhost/BersihinAja/assets/slider/';
 
-$config['assets_artikel'] = $_SERVER["DOCUMENT_ROOT"]."/BersihinAja/assets/artikel/";
+$config['assets_artikel'] = $_SERVER["DOCUMENT_ROOT"] . "/BersihinAja/assets/artikel/";
 $config["url_artikel"] = 'http://localhost/BersihinAja/assets/artikel/';
 // admin
 

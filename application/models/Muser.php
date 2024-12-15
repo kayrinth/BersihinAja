@@ -75,4 +75,11 @@ class Muser extends CI_Model
             return false;
         }
     }
+
+    public function getUsersByIds($ids)
+    {
+        $this->db->where_in('Id_User', $ids); // Use where_in for multiple IDs
+        $query = $this->db->get('user'); // Assuming the table name is 'users'
+        return $query->result_array();
+    }
 }
