@@ -156,60 +156,7 @@ class Service_Detail extends CI_Controller
     
         // Redirect ke halaman konfirmasi atau detail pemesanan
         $this->session->set_flashdata('success', 'Pesanan berhasil dibuat!');
-        redirect('services/checkout/'. $id_services, 'refresh');
+        redirect('services');
     }
-    
-    public function checkout($id_services)
-    {
-        $id_user = $this->session->userdata('id_user'); // ID pengguna
-        if (!$id_user) {
-            $this->session->set_flashdata('error', 'Silakan login terlebih dahulu!');
-            redirect('login');
-            return;
-        }
-
-        // Ambil data pengguna
-        $user_data = $this->Muser->getUserById($id_user);
-
-        // Ambil detail layanan
-        $detail_layanan = $this->Mservice_detail->getServiceDetail($id_services);
-
-        // Ambil data paket dan pekerja dari session (disimpan saat order)
-        $selected_paket = $this->input->post('paket') ?: [];
-        $selected_pekerja = $this->input->post('selected_pekerja') ?: [];
-
-        // Ambil detail paket
-        $paket_detail = [];
-        foreach ($selected_paket as $id_paket) {
-            $paket_detail[] = $this->Mservice_detail->getPackageById($id_paket);
-        }
-
-        // Ambil detail pekerja
-        $pekerja_detail = [];
-        foreach ($selected_pekerja as $id_pekerja) {
-            $pekerja_detail[] = $this->Muser->getUserById($id_pekerja);
-        }
-
-        // Hitung total harga
-        $total_harga = $detail_layanan['Harga'] ?? 0;
-        foreach ($paket_detail as $paket) {
-            $total_harga += $paket['Harga'];
-        }
-
-        // Siapkan data untuk view
-        $data = [
-            'user_data' => $user_data,
-            'detail_layanan' => $detail_layanan,
-            'paket_detail' => $paket_detail,
-            'pekerja_detail' => $pekerja_detail,
-            'total_harga' => $total_harga
-        ];
-
-        $this->load->view('header');
-        $this->load->view('checkout', $data);
-        $this->load->view('footer');
-    }
-
-    
     
 }

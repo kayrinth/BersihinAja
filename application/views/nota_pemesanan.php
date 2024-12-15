@@ -1,3 +1,26 @@
+<?php 
+include 'midtrans-php/Midtrans.php';
+
+// Set your Merchant Server Key
+\Midtrans\Config::$serverKey = 'SB-Mid-server-sDOZNKYY7IIJOfOJg5nlBWr3';
+// Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+\Midtrans\Config::$isProduction = false;
+// Set sanitization on (default)
+\Midtrans\Config::$isSanitized = true;
+// Set 3DS transaction for credit card to true
+\Midtrans\Config::$is3ds = true;
+
+$params = array(
+'transaction_details' => array(
+    'order_id' => rand(),
+    'gross_amount' => 94000,
+    )
+);
+
+$params['transaction_details']['order_id'] = $detail_pemesanan['Id_Detail_Pemesanan'];
+$params['transaction_details']['gross_amount'] = $detail_pemesanan['Total'];
+?>
+
 <div class="container py-5">
     <div class="card shadow border-0 p-4">
         <h1 class="fw-bold text-primary mb-4">Nota Pemesanan</h1>
