@@ -122,7 +122,8 @@ class Service_Detail extends CI_Controller
                 }
             }
         }
-        
+        // Generate order_id
+        $order_id = uniqid() . '-' . time();
 
         // Simpan data pemesanan ke session (sementara)
         $data_pemesanan = [
@@ -133,11 +134,12 @@ class Service_Detail extends CI_Controller
             'Tanggal_Order' => date('Y-m-d H:i:s'),
             'Id_Paket' => !empty($selected_paket) ? implode(',', $selected_paket) : null,
             'Id_Pekerja' => !empty($selected_pekerja) ? implode(',', $selected_pekerja) : null,
-            'Id_Customer' => $id_user
+            'Id_Customer' => $id_user,
+            'order_id' => $order_id, // Tambahkan order_id
         ];
-    
-        // Simpan data pemesanan di session untuk memverifikasi apakah pemesanan sudah dilakukan
+
         $this->session->set_userdata('order_data', $data_pemesanan);
+
 
         // Redirect ke halaman konfirmasi atau nota pemesanan
         redirect('service_detail/confirmOrder');
@@ -145,17 +147,21 @@ class Service_Detail extends CI_Controller
 
     public function confirmOrder()
     {
-
         $data_pemesanan = $this->session->userdata('order_data');
-
 
         if (!$data_pemesanan) {
             redirect('services');
         }
 
-        // Proses penyimpanan data pemesanan ke database
+        // Generate unique order_id for Midtrans
+        $order_id = uniqid() . '-' . time();  // Format order_id untuk Midtrans
+
+        // Tambahkan order_id ke dalam data pemesanan
+        $data_pemesanan['order_id'] = $order_id; // Menyimpan order_id untuk Midtrans
+
+        // Simpan data pemesanan ke database
         $this->db->insert('detail_pemesanan', $data_pemesanan);
-        $id_pemesanan = $this->db->insert_id();
+        $id_pemesanan = $this->db->insert_id(); // Id_Detail_Pemesanan adalah auto-generated ID
 
         // Mengambil detail pemesanan yang baru disimpan
         $detail_pemesanan = $this->Mservice_detail->getDetailPemesananById($id_pemesanan);
@@ -203,7 +209,7 @@ class Service_Detail extends CI_Controller
                 }
             }
         }
-
+        $order_id = uniqid() . '-' . time();
         // Siapkan data untuk disimpan
         $data = [
             'Id_Jenis_Layanan' => $id_services,
@@ -216,6 +222,7 @@ class Service_Detail extends CI_Controller
             'Id_Customer' => $id_customer,
             'Ulasan' => null,
             'Jumlah_Rating' => null,
+            'order_id' => $order_id,
         ];
 
         // Simpan data dan dapatkan ID pemesanan
@@ -237,26 +244,48 @@ class Service_Detail extends CI_Controller
     {
         $input = json_decode(file_get_contents('php://input'), true);
 
-        // Validasi data
+        // Validasi data dari Midtrans
         if (!isset($input['order_id']) || !isset($input['gross_amount'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Invalid input data']);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Invalid input data. Missing order_id or gross_amount.',
+            ]);
             return;
         }
 
-        // Simpan atau update data transaksi
+        // Ambil data dari Midtrans
         $order_id = $input['order_id'];
         $gross_amount = $input['gross_amount'];
 
-        // Update atau insert data ke detail_pemesanan
-        $this->db->where('Id_Detail_Pemesanan', $order_id);
-        $this->db->update('detail_pemesanan', ['Total' => $gross_amount, 'Status_Pembayaran' => 'Dibayar']);
+        // Periksa apakah order_id ada di database
+        $this->db->where('order_id', $order_id);
+        $order_exists = $this->db->get('detail_pemesanan')->row();
 
-        // Periksa apakah berhasil disimpan
+        if (!$order_exists) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Order ID not found in database.',
+            ]);
+            return;
+        }
+
+        // Update data transaksi di tabel detail_pemesanan
+        $this->db->where('order_id', $order_id);
+        $this->db->update('detail_pemesanan', [
+            'Total' => $gross_amount,
+            'Status_Pembayaran' => 'Dibayar',
+        ]);
+
         if ($this->db->affected_rows() > 0) {
-            echo json_encode(['status' => 'success', 'message' => 'Transaction updated successfully']);
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Transaction updated successfully.',
+            ]);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Failed to update transaction']);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Failed to update transaction. Possibly no changes were made.',
+            ]);
         }
     }
 }
-

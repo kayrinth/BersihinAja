@@ -11,14 +11,14 @@ include 'midtrans-php/Midtrans.php';
 \Midtrans\Config::$is3ds = true;
 
 
-$total_harga = $detail_layanan['Harga']; // Mulai dari harga layanan dasar
+$total_harga = $detail_layanan['Harga'];
 if (!empty($paket_detail)) {
     foreach ($paket_detail as $paket) {
         $total_harga += $paket['Harga'];
     }
 }
 
-$params['transaction_details']['order_id'] = $detail_pemesanan['Id_Detail_Pemesanan'];
+$params['transaction_details']['order_id'] = $detail_pemesanan['order_id'];
 $params['transaction_details']['gross_amount'] = $total_harga;
 $snapToken = \Midtrans\Snap::getSnapToken($params);
 ?>
@@ -129,28 +129,29 @@ $snapToken = \Midtrans\Snap::getSnapToken($params);
     document.getElementById('pay-button').onclick = function() {
         // SnapToken acquired from previous step
         snap.pay('<?= $snapToken; ?>', {
-            onSuccess: function (result) {
-                console.log(result);
+            onSuccess: function(result) {
+                console.log('Midtrans result:', result);
 
                 fetch('<?= base_url('service_detail/saveTransaction'); ?>', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(result)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        alert('Transaksi berhasil disimpan!');
-                        window.location.href = '<?= base_url('services'); ?>';
-                    } else {
-                        alert('Gagal menyimpan transaksi: ' + data.message);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(result),
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('Server response:', data);
+
+                        if (data.status === 'success') {
+                            alert('Transaksi berhasil disimpan!');
+                            window.location.href = '<?= base_url('services'); ?>';
+                        } else {
+                            alert('Gagal menyimpan transaksi: ' + data.message);
+                        }
+                    })
+                    .catch((error) => console.error('Error:', error));
             },
         });
-
     };
 </script>

@@ -29,22 +29,29 @@
 
         </div>
 
-        <div class="flex items-end justify-center align-items-center">
+        <div class="flex items-end justify-center align-items-center relative">
           <?php if ($this->session->userdata('id_user')) : ?>
-
-            <button type="button" onclick="window.location.href='<?= base_url('auth/updateUser') ?>'" class="flex text-black text-sm font-medium mr-4">
+            <!-- Dropdown Button -->
+            <button id="dropdown-btn" type="button" class="flex items-center text-black text-sm font-medium mr-4 focus:outline-none">
               <?= $this->session->userdata('Nama_User'); ?>
+              <svg class="ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
-            <a href="<?php echo base_url('auth/logout'); ?>" class="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition duration-200">
-              Logout
-            </a>
+
+            <!-- Dropdown Menu -->
+            <div id="dropdown-menu"
+              class="hidden absolute top-full right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
+              <a href="<?= base_url('auth/updateUser') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit Profile</a>
+              <a href="<?= base_url('history') ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">History</a>
+              <a href="<?= base_url('auth/logout') ?>" class="block px-4 py-2 text-sm text-red-500 hover:bg-red-100">Logout</a>
+            </div>
           <?php else : ?>
             <a href="<?php echo base_url('auth'); ?>" class="bg-[#80BCBD] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-500 transition duration-200">
               Login
             </a>
           <?php endif; ?>
         </div>
-
 
         <!-- Mobile Hamburger Menu -->
         <div class="sm:hidden">
@@ -80,6 +87,21 @@
   </nav>
 
   <script>
+    const dropdownBtn = document.getElementById('dropdown-btn');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    dropdownBtn.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Klik di luar untuk menutup dropdown
+    document.addEventListener('click', (event) => {
+      if (!dropdownBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+
+
     // Toggle Mobile Menu
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
