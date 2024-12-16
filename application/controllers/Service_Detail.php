@@ -111,12 +111,18 @@ class Service_Detail extends CI_Controller
 
 
         // Hitung total harga
-        $total_harga = $detail_layanan['Harga'];
-        if (!empty($paket_detail)) {
-            foreach ($paket_detail as $paket) {
-                $total_harga += $paket['Harga'];
+        $total_harga = $detail_layanan['Harga']; // Mulai dengan harga layanan
+
+        // Tambahkan harga paket
+        if (!empty($selected_paket)) {
+            foreach ($selected_paket as $id_paket) {
+                $paket = $this->Mservice_detail->getPackagesByIds([$id_paket]); // Harus mengirim array
+                if (!empty($paket)) {
+                    $total_harga += $paket[0]['Harga']; // Ambil elemen pertama dari hasil query
+                }
             }
         }
+        
 
         // Simpan data pemesanan ke session (sementara)
         $data_pemesanan = [
@@ -129,7 +135,7 @@ class Service_Detail extends CI_Controller
             'Id_Pekerja' => !empty($selected_pekerja) ? implode(',', $selected_pekerja) : null,
             'Id_Customer' => $id_user
         ];
-
+    
         // Simpan data pemesanan di session untuk memverifikasi apakah pemesanan sudah dilakukan
         $this->session->set_userdata('order_data', $data_pemesanan);
 
@@ -226,4 +232,31 @@ class Service_Detail extends CI_Controller
 
         echo json_encode($response);
     }
+
+    public function saveTransaction()
+    {
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        // Validasi data
+        if (!isset($input['order_id']) || !isset($input['gross_amount'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Invalid input data']);
+            return;
+        }
+
+        // Simpan atau update data transaksi
+        $order_id = $input['order_id'];
+        $gross_amount = $input['gross_amount'];
+
+        // Update atau insert data ke detail_pemesanan
+        $this->db->where('Id_Detail_Pemesanan', $order_id);
+        $this->db->update('detail_pemesanan', ['Total' => $gross_amount, 'Status_Pembayaran' => 'Dibayar']);
+
+        // Periksa apakah berhasil disimpan
+        if ($this->db->affected_rows() > 0) {
+            echo json_encode(['status' => 'success', 'message' => 'Transaction updated successfully']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to update transaction']);
+        }
+    }
 }
+

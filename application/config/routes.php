@@ -57,4 +57,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route['no_access'] = 'no_access/index';
 $route['service_detail/saveOrder'] = 'Service_Detail/saveOrder';
 $route['services/checkout/(:num)'] = 'service_detail/checkout/$1';
-$route['service_detail/paymentCallback'] = 'service_detail/paymentCallback';
+
+

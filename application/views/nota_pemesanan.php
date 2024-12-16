@@ -11,7 +11,7 @@ include 'midtrans-php/Midtrans.php';
 \Midtrans\Config::$is3ds = true;
 
 
-$total_harga = $detail_layanan['Harga'];
+$total_harga = $detail_layanan['Harga']; // Mulai dari harga layanan dasar
 if (!empty($paket_detail)) {
     foreach ($paket_detail as $paket) {
         $total_harga += $paket['Harga'];
@@ -128,22 +128,29 @@ $snapToken = \Midtrans\Snap::getSnapToken($params);
 <script type="text/javascript">
     document.getElementById('pay-button').onclick = function() {
         // SnapToken acquired from previous step
-        snap.pay('<?= $snapToken ?>', {
-            // Optional
-            onSuccess: function(result) {
-                /* You may add your own js here, this is just example */
-                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+        snap.pay('<?= $snapToken; ?>', {
+            onSuccess: function (result) {
+                console.log(result);
+
+                fetch('<?= base_url('service_detail/saveTransaction'); ?>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(result)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Transaksi berhasil disimpan!');
+                        window.location.href = '<?= base_url('services'); ?>';
+                    } else {
+                        alert('Gagal menyimpan transaksi: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
             },
-            // Optional
-            onPending: function(result) {
-                /* You may add your own js here, this is just example */
-                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-            },
-            // Optional
-            onError: function(result) {
-                /* You may add your own js here, this is just example */
-                document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-            }
         });
+
     };
 </script>

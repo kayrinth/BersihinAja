@@ -37,14 +37,15 @@ class Customer extends CI_Controller{
 			show_404(); // Tampilkan halaman 404 jika data tidak ditemukan
 			return;
 		}
-		// $this->load->model('Mtransaksi');
-		// $data['jual'] = $this->Mtransaksi->transaksi_member_jual($id_customer);
-		// $data['beli'] = $this->Mtransaksi->transaksi_member_beli($id_customer);
-
+	
+		// Ambil data detail_pemesanan dengan menggunakan join
+		$data['detail_pemesanan'] = $this->Mcustomer->get_detail_pemesanan_by_user($id_customer);
+	
 		$this->load->view('admin/header');
 		$this->load->view('admin/customer_detail', $data);
 		$this->load->view('admin/footer');
 	}
+	
 
 }
 ?>
