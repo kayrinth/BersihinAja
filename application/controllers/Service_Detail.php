@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
 class Service_Detail extends CI_Controller
 {
     public function __construct()
@@ -12,34 +13,46 @@ class Service_Detail extends CI_Controller
 
     public function index()
     {
-
-        $id_services = $this->input->get('id');
-
         $id_user = $this->session->userdata('id_user');
 
+        if (!$id_user) {
+            $this->session->set_flashdata('error', 'Login dulu sebelum memilih pekerja!');
+            redirect('auth');
+            exit;
+        }
+
         $user_data = $this->Muser->getuserById($id_user);
+
+        if (!$user_data) {
+            $this->session->set_flashdata('error', 'Data user tidak ditemukan. Silakan login lagi.');
+            redirect('auth');
+            exit;
+        }
+
+
         $this->session->set_userdata('id_user', $user_data['Id_User']);
 
+        $data['pekerja'] = $this->Muser->getPekerjaByAlamat($user_data['Alamat_User']) ?? [];
 
-        if ($user_data) {
-            $data['pekerja'] = $this->Muser->getPekerjaByAlamat($user_data['Alamat_User']);
-        } else {
-            $data['pekerja'] = [];
-        }
+        $id_services = $this->input->get('id');
         $data['detail_layanan'] = $this->Mservice_detail->getServiceDetail($id_services);
+
 
         if (empty($data['detail_layanan'])) {
             $this->session->set_flashdata('error', 'Layanan tidak ditemukan.');
             redirect('services');
+            exit;
         }
 
-        // Ambil semua data paket
+        // Ambil semua data paket layanan
         $data['paket'] = $this->Mservice_detail->getAllPackages();
 
+        // Load views
         $this->load->view('header');
         $this->load->view('service_detail', $data);
         $this->load->view('footer');
     }
+
 
     public function showDetail($id_detail_pemesanan)
     {
@@ -64,6 +77,9 @@ class Service_Detail extends CI_Controller
         $id_services = $this->input->get('id') ?? $this->input->post('id_services');
 
         $detail_layanan = $this->Mservice_detail->getServiceDetail($id_services);
+
+        $tanggal_order = date('Y-m-d H:i:s');
+        $timeout_at = date('Y-m-d H:i:s', time() + (3 * 60));
 
         // Validasi minimal satu pekerja dipilih
         if (empty($selected_pekerja)) {
@@ -131,7 +147,8 @@ class Service_Detail extends CI_Controller
             'Total' => $total_harga,
             'Status_Pembayaran' => 'Belum Dibayar',
             'Alamat' => $user_data['Alamat_User'],
-            'Tanggal_Order' => date('Y-m-d H:i:s'),
+            'Tanggal_Order' => $tanggal_order,
+            'timeout_at' => $timeout_at,
             'Id_Paket' => !empty($selected_paket) ? implode(',', $selected_paket) : null,
             'Id_Pekerja' => !empty($selected_pekerja) ? implode(',', $selected_pekerja) : null,
             'Id_Customer' => $id_user,
@@ -147,60 +164,103 @@ class Service_Detail extends CI_Controller
 
     public function confirmOrder()
     {
+        // Ambil data pemesanan dari session
         $data_pemesanan = $this->session->userdata('order_data');
 
+        // Validasi data pemesanan
         if (!$data_pemesanan) {
+            $this->session->set_flashdata('error', 'Data pemesanan tidak ditemukan');
             redirect('services');
+            return;
         }
 
-        // Generate unique order_id for Midtrans
-        $order_id = uniqid() . '-' . time();  // Format order_id untuk Midtrans
+        try {
+            // Generate unique order_id
+            $order_id = uniqid() . '-' . time();
+            $data_pemesanan['order_id'] = $order_id;
 
-        // Tambahkan order_id ke dalam data pemesanan
-        $data_pemesanan['order_id'] = $order_id; // Menyimpan order_id untuk Midtrans
+            // Simpan ke database
+            $this->db->insert('detail_pemesanan', $data_pemesanan);
+            $id_pemesanan = $this->db->insert_id();
 
-        // Simpan data pemesanan ke database
-        $this->db->insert('detail_pemesanan', $data_pemesanan);
-        $id_pemesanan = $this->db->insert_id(); // Id_Detail_Pemesanan adalah auto-generated ID
+            // Ambil detail pemesanan yang baru disimpan
+            $detail_pemesanan = $this->Mservice_detail->getDetailPemesananById($id_pemesanan);
 
-        // Mengambil detail pemesanan yang baru disimpan
-        $detail_pemesanan = $this->Mservice_detail->getDetailPemesananById($id_pemesanan);
+            if (!$detail_pemesanan) {
+                throw new Exception('Gagal mengambil detail pemesanan');
+            }
 
-        // Siapkan data untuk ditampilkan di nota
-        $data['user_data'] = $this->Muser->getUserById($data_pemesanan['Id_Customer']);
-        $data['detail_layanan'] = $this->Mservice_detail->getServiceDetail($data_pemesanan['Id_Jenis_Layanan']);
-        $data['paket_detail'] = $this->Mservice_detail->getPackagesByIds(explode(',', $data_pemesanan['Id_Paket']));
-        $data['pekerja_detail'] = $this->Muser->getUsersByIds(explode(',', $data_pemesanan['Id_Pekerja']));
-        $data['detail_pemesanan'] = $detail_pemesanan;
+            // Siapkan data untuk nota
+            $data = [
+                'user_data' => $this->Muser->getUserById($data_pemesanan['Id_Customer']),
+                'detail_layanan' => $this->Mservice_detail->getServiceDetail($data_pemesanan['Id_Jenis_Layanan']),
+                'detail_pemesanan' => $detail_pemesanan,
+            ];
 
-        // Hapus data pemesanan dari session
-        $this->session->unset_userdata('order_data');
+            // Handle paket detail - cek jika ada paket yang dipilih
+            if (!empty($data_pemesanan['Id_Paket'])) {
+                $data['paket_detail'] = $this->Mservice_detail->getPackagesByIds(
+                    explode(',', $data_pemesanan['Id_Paket'])
+                );
+            } else {
+                $data['paket_detail'] = []; // Set empty array jika tidak ada paket
+            }
 
-        // Tampilkan nota pemesanan
-        $this->load->view('header');
-        $this->load->view('nota_pemesanan', $data);
-        $this->load->view('footer');
+            // Handle pekerja detail
+            if (!empty($data_pemesanan['Id_Pekerja'])) {
+                $data['pekerja_detail'] = $this->Muser->getUsersByIds(
+                    explode(',', $data_pemesanan['Id_Pekerja'])
+                );
+            } else {
+                throw new Exception('Data pekerja tidak ditemukan');
+            }
+
+            // Hapus data pemesanan dari session
+            $this->session->unset_userdata('order_data');
+
+            // Tampilkan nota pemesanan
+            $this->load->view('header');
+            $this->load->view('nota_pemesanan', $data);
+            $this->load->view('footer');
+        } catch (Exception $e) {
+            // Log error
+            log_message('error', 'Error in confirmOrder: ' . $e->getMessage());
+
+            // Set flash message dan redirect
+            $this->session->set_flashdata('error', 'Terjadi kesalahan saat memproses pesanan');
+            redirect('services');
+        }
     }
-
     public function saveOrder()
     {
+        // Ambil data user dan input
         $id_customer = $this->session->userdata('id_user');
         $id_services = $this->input->post('id_services');
         $selected_paket = $this->input->post('paket');
         $selected_pekerja = $this->input->post('selected_pekerja');
-
         $alamat = $this->input->post('alamat');
-        $tanggal_order = date('Y-m-d H:i:s');
-        $status_pembayaran = 'Pending'; // Ubah menjadi Pending untuk Midtrans
 
-        // Hitung total harga
+        $selected_paket = $this->input->post('paket');
+        if (empty($selected_paket)) {
+            $selected_paket = []; // Set sebagai array kosong jika tidak ada paket yang dipilih
+        }
+
+        // Set waktu order dan timeout
+        $tanggal_order = date('Y-m-d H:i:s');
+        $timeout_at = date('Y-m-d H:i:s', time() + (3 * 60)); // 3 menit dalam detik
+        $status_pembayaran = 'Belum Dibayar';
+
+        // Generate order ID unik
+        $order_id = uniqid() . '-' . time();
+
+        // Hitung total harga layanan
         $total_harga = 0;
         $detail_layanan = $this->Mservice_detail->getServiceDetail($id_services);
         if ($detail_layanan) {
             $total_harga += $detail_layanan['Total'];
         }
 
-        // Tambahkan harga paket
+        // Tambahkan harga paket jika ada
         if (!empty($selected_paket)) {
             foreach ($selected_paket as $id_paket) {
                 $paket = $this->Mservice_detail->getPackageById($id_paket);
@@ -209,7 +269,7 @@ class Service_Detail extends CI_Controller
                 }
             }
         }
-        $order_id = uniqid() . '-' . time();
+
         // Siapkan data untuk disimpan
         $data = [
             'Id_Jenis_Layanan' => $id_services,
@@ -217,45 +277,70 @@ class Service_Detail extends CI_Controller
             'Status_Pembayaran' => $status_pembayaran,
             'Alamat' => $alamat,
             'Tanggal_Order' => $tanggal_order,
+            'timeout_at' => $timeout_at,
             'Id_Paket' => !empty($selected_paket) ? implode(',', $selected_paket) : null,
             'Id_Pekerja' => !empty($selected_pekerja) ? implode(',', $selected_pekerja) : null,
             'Id_Customer' => $id_customer,
             'Ulasan' => null,
             'Jumlah_Rating' => null,
             'order_id' => $order_id,
+            'updated_at' => $tanggal_order
         ];
 
-        // Simpan data dan dapatkan ID pemesanan
-        $this->db->insert('detail_pemesanan', $data);
-        $id_pemesanan = $this->db->insert_id();
+        // Validasi data wajib
+        if (empty($data['timeout_at'])) {
+            $response = [
+                'status' => 'error',
+                'message' => 'Timeout tidak boleh kosong'
+            ];
+            echo json_encode($response);
+            return;
+        }
 
-        // Mengembalikan respons dalam bentuk JSON
-        $response = [
-            'status' => 'success',
-            'message' => 'Order berhasil disimpan.',
-            'id_pemesanan' => $id_pemesanan,
-            'total_harga' => $total_harga,
-        ];
+        try {
+            // Simpan ke database
+            $this->db->insert('detail_pemesanan', $data);
+            $id_pemesanan = $this->db->insert_id();
 
+            // Siapkan response sukses
+            $response = [
+                'status' => 'success',
+                'message' => 'Order berhasil disimpan.',
+                'id_pemesanan' => $id_pemesanan,
+                'total_harga' => $total_harga,
+                'timeout_at' => $timeout_at,
+                'order_id' => $order_id
+            ];
+        } catch (Exception $e) {
+            // Tangani error jika terjadi
+            $response = [
+                'status' => 'error',
+                'message' => 'Gagal menyimpan order: ' . $e->getMessage()
+            ];
+        }
+
+        // Kirim response dalam format JSON
         echo json_encode($response);
     }
 
     public function saveTransaction()
     {
+        // Ambil data JSON dari Midtrans
         $input = json_decode(file_get_contents('php://input'), true);
 
-        // Validasi data dari Midtrans
-        if (!isset($input['order_id']) || !isset($input['gross_amount'])) {
+        // Validasi data wajib dari Midtrans
+        if (!isset($input['order_id'], $input['gross_amount'], $input['transaction_status'])) {
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Invalid input data. Missing order_id or gross_amount.',
+                'message' => 'Invalid input data. Missing required fields.',
             ]);
             return;
         }
 
-        // Ambil data dari Midtrans
+        // Ambil data dari input
         $order_id = $input['order_id'];
         $gross_amount = $input['gross_amount'];
+        $transaction_status = $input['transaction_status'];
 
         // Periksa apakah order_id ada di database
         $this->db->where('order_id', $order_id);
@@ -269,12 +354,31 @@ class Service_Detail extends CI_Controller
             return;
         }
 
-        // Update data transaksi di tabel detail_pemesanan
-        $this->db->where('order_id', $order_id);
-        $this->db->update('detail_pemesanan', [
+        $status_pembayaran = '';
+        switch ($transaction_status) {
+            case 'capture':
+            case 'settlement':
+                $status_pembayaran = 'Dibayar';
+                break;
+            case 'pending':
+                $status_pembayaran = 'Belum Dibayar';
+                break;
+            case 'expire':
+            case 'cancel':
+                $status_pembayaran = 'Dibatalkan';
+                break;
+            default:
+                $status_pembayaran = 'Unknown';
+        }
+
+        $update_data = [
             'Total' => $gross_amount,
-            'Status_Pembayaran' => 'Dibayar',
-        ]);
+            'Status_Pembayaran' => $status_pembayaran,
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+
+        $this->db->where('order_id', $order_id);
+        $this->db->update('detail_pemesanan', $update_data);
 
         if ($this->db->affected_rows() > 0) {
             echo json_encode([

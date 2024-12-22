@@ -156,7 +156,6 @@ class History extends CI_Controller
             // Log status
             log_message('info', "Midtrans Callback - Order ID: $order_id, Status: $status");
 
-            // Kirim respons ke Midtrans
             http_response_code(200);
             echo json_encode(['status' => 'success']);
         } catch (Exception $e) {
