@@ -11,7 +11,6 @@
 								<th>Tanggal Order</th>
 								<th>Total</th>
 								<th>Status Pembayaran</th>
-								<th>Alamat</th>
 								<th>Ulasan</th>
 								<th>Jumlah Rating</th>
 							</tr>
@@ -23,12 +22,12 @@
 									<td><?php echo $pemesanan['Tanggal_Order']; ?></td>
 									<td><?php echo $pemesanan['Total']; ?></td>
 									<td><?php echo $pemesanan['Status_Pembayaran']; ?></td>
-									<td><?php echo $pemesanan['Alamat']; ?></td>
 									<td><?php echo $pemesanan['Ulasan']; ?></td>
 									<td><?php echo $pemesanan['Jumlah_Rating']; ?></td>
 								</tr>
 							<?php endforeach; ?>
 						</tbody>
+
 					</table>
 				<?php else: ?>
 					<p>Tidak ada detail pemesanan untuk customer ini.</p>

@@ -13,6 +13,7 @@ class Auth extends CI_Controller
 
     public function index()
     {
+
         if ($this->session->userdata('email_user')) {
             if ($this->session->userdata('role_id') == 'pekerja') {
                 redirect('pekerja/beranda');
@@ -76,9 +77,23 @@ class Auth extends CI_Controller
 
     public function registUser()
     {
+
+        $url = "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $data['provinces'] = json_decode($response, true);
+
+
         $this->form_validation->set_rules('Nama_User', 'Nama User', 'required|trim');
         $this->form_validation->set_rules('Email_User', 'Email User', 'required|trim|valid_email|is_unique[user.Email_User]', ['is_unique' => 'Email sudah digunakan']);
-        $this->form_validation->set_rules('Alamat_User', 'Alamat User', 'required|trim');
+        $this->form_validation->set_rules('Provinsi', 'provinsi', 'required');
+        $this->form_validation->set_rules('Kabupaten', 'kabupaten', 'required');
         $this->form_validation->set_rules('No_Hp', 'No Hp', 'required|numeric|trim|max_length[15]');
         $this->form_validation->set_rules('KTP', 'KTP', 'required|numeric|trim|max_length[16]');
         $this->form_validation->set_rules('role_id', 'Role Id', 'required|in_list[pekerja,customer]', ['required' => 'Role wajib dipilih', 'in_list' => 'Role tidak valid']);
@@ -86,16 +101,20 @@ class Auth extends CI_Controller
 
         if ($this->form_validation->run() == false) {
 
-            $this->load->view('auth/registUser');
+            $this->load->view('auth/registUser', $data);
         } else {
+            $role = $this->input->post('role_id');
+            $status = ($role == 'pekerja') ? 'tidak bekerja' : '';
             $data = [
                 'Nama_User' => $this->input->post('Nama_User'),
                 'Email_User' => $this->input->post('Email_User'),
-                'Alamat_User' => $this->input->post('Alamat_User'),
+                'Provinsi' => $this->input->post('Provinsi'),
+                'Kabupaten' => $this->input->post('Kabupaten'),
                 'No_Hp' => $this->input->post('No_Hp'),
                 'KTP' => $this->input->post('KTP'),
                 'Role_Id' => $this->input->post('role_id'),
                 'Password' => sha1($this->input->post('password')),
+                'Status' => $status
             ];
 
             if ($this->Muser->registerUser($data)) {
@@ -108,27 +127,45 @@ class Auth extends CI_Controller
         }
     }
 
+
+
     public function registPekerja()
     {
+        $url = "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $data['provinces'] = json_decode($response, true);
+
+
         $this->form_validation->set_rules('Nama_User', 'Nama User', 'required|trim');
         $this->form_validation->set_rules('Email_User', 'Email User', 'required|trim|valid_email|is_unique[user.Email_User]', ['is_unique' => 'Email sudah digunakan']);
-        $this->form_validation->set_rules('Alamat_User', 'Alamat User', 'required|trim');
+        $this->form_validation->set_rules('Provinsi', 'provinsi', 'required');
+        $this->form_validation->set_rules('Kabupaten', 'kabupaten', 'required');
         $this->form_validation->set_rules('No_Hp', 'No Hp', 'required|numeric|trim|max_length[15]');
         $this->form_validation->set_rules('KTP', 'KTP', 'required|numeric|trim|max_length[16]');
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[3]|trim');
 
         if ($this->form_validation->run() == false) {
 
-            $this->load->view('pekerja/registPekerja');
+            $this->load->view('pekerja/registPekerja', $data);
         } else {
+
             $data = [
                 'Nama_User' => $this->input->post('Nama_User'),
                 'Email_User' => $this->input->post('Email_User'),
-                'Alamat_User' => $this->input->post('Alamat_User'),
+                'Provinsi' => $this->input->post('Provinsi'),
+                'Kabupaten' => $this->input->post('Kabupaten'),
                 'No_Hp' => $this->input->post('No_Hp'),
                 'KTP' => $this->input->post('KTP'),
-                'Role_Id' => 'pekerja',
+                'Role_Id' => "pekerja",
                 'Password' => sha1($this->input->post('password')),
+                'Status' => "Tidak Bekerja"
             ];
 
             if ($this->Muser->registerUser($data)) {
@@ -141,56 +178,107 @@ class Auth extends CI_Controller
         }
     }
 
+    public function getKabupaten()
+    {
+        $provinsi_id = $this->input->post('provinsi_id');
+        if (empty($provinsi_id)) {
+            echo json_encode(['error' => 'No provinsi ID provided']);
+            return;
+        }
+
+        $url = "https://www.emsifa.com/api-wilayah-indonesia/api/regencies/" . $provinsi_id . ".json";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            echo json_encode(['error' => 'Curl error: ' . curl_error($ch)]);
+            curl_close($ch);
+            return;
+        }
+
+        curl_close($ch);
+
+        if ($response) {
+            echo $response;
+        } else {
+            echo json_encode(['error' => 'No data found']);
+        }
+    }
 
     public function updateUser()
     {
         $id_user = $this->session->userdata('id_user');
 
-        $upload_path =
-            $this->config->item('Foto_Customer');
+        // Get provinces data for the dropdown
+        $url = "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $data['provinces'] = json_decode($response, true);
+
+        $upload_path = $this->config->item('Foto_Customer');
 
         if (!is_dir($upload_path)) {
             mkdir($upload_path, 0755, TRUE);
         }
 
-        // Proses upload foto
-        $config['upload_path'] =
-            realpath($upload_path);
+        // Upload configuration
+        $config['upload_path'] = realpath($upload_path);
         $config['allowed_types'] = 'jpg|jpeg|png|gif';
-        $config['max_size'] = 2048; // 2MB
+        $config['max_size'] = 2048;
         $config['file_name'] = 'user_' . $id_user . '_' . time();
         $config['overwrite'] = TRUE;
         $config['remove_spaces'] = TRUE;
 
         $this->load->library('upload', $config);
 
-        // Validasi form
+        // Form validation
         $this->form_validation->set_rules('Nama_User', 'Nama User', 'trim');
-        $this->form_validation->set_rules('Alamat_User', 'Alamat User', 'trim');
         $this->form_validation->set_rules('No_Hp', 'No Hp', 'numeric|trim|max_length[15]');
         $this->form_validation->set_rules('password', 'Password', 'trim|min_length[3]');
+        $this->form_validation->set_rules('Provinsi', 'Provinsi', 'required');
+        $this->form_validation->set_rules('Kabupaten', 'Kabupaten', 'required');
 
         if ($this->form_validation->run() == false) {
             $data['user'] = $this->Muser->getuserById($this->session->userdata('id_user'));
+
+            // If user has province, get kabupaten data
+            if (!empty($data['user']['Provinsi'])) {
+                $kab_url = "https://www.emsifa.com/api-wilayah-indonesia/api/regencies/" . $data['user']['Provinsi'] . ".json";
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $kab_url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                $kab_response = curl_exec($ch);
+                curl_close($ch);
+
+                $data['kabupatens'] = json_decode($kab_response, true);
+            }
+
             $this->load->view('auth/updateuser', $data);
         } else {
-            $id_user = $this->session->userdata('id_user');
             $data = [
                 'Nama_User' => $this->input->post('Nama_User'),
-                'Alamat_User' => $this->input->post('Alamat_User'),
                 'No_Hp' => $this->input->post('No_Hp'),
+                'Provinsi' => $this->input->post('Provinsi'),
+                'Kabupaten' => $this->input->post('Kabupaten')
             ];
 
-            // Cek apakah ada file foto yang diupload
+            // Handle photo upload
             if (!empty($_FILES['foto']['name'])) {
                 if ($this->upload->do_upload('foto')) {
                     $upload_data = $this->upload->data();
                     $data['Foto_User'] = $upload_data['file_name'];
 
-                    var_dump($upload_data);
-                    var_dump($_FILES['foto']);
-
-                    // Hapus foto lama
+                    // Delete old photo
                     $old_user = $this->Muser->getuserById($id_user);
                     if (!empty($old_user['Foto_User'])) {
                         $old_file_path = $this->config->item('Foto_Customer') . $old_user['Foto_User'];
@@ -199,18 +287,17 @@ class Auth extends CI_Controller
                         }
                     }
                 } else {
-                    $upload_error = $this->upload->display_errors();
-                    $this->session->set_flashdata('pesan_error', $upload_error);
+                    $this->session->set_flashdata('pesan_error', $this->upload->display_errors());
                     redirect('auth/updateUser');
                 }
             }
 
-            // Update password jika diisi
+            // Update password if provided
             if (!empty($this->input->post('password'))) {
                 $data['Password'] = sha1($this->input->post('password'));
             }
 
-            // Proses update user
+            // Update user
             if ($this->Muser->updateuser($id_user, $data)) {
                 $this->session->set_userdata('Nama_User', $data['Nama_User']);
                 $this->session->set_flashdata('pesan_sukses', 'Profil berhasil diperbarui!');
@@ -222,7 +309,6 @@ class Auth extends CI_Controller
                 } elseif ($user['Role_Id'] == 'pekerja') {
                     redirect('pekerja/beranda');
                 } else {
-                    // Jika role tidak dikenali, tampilkan pesan error
                     $this->session->set_flashdata('pesan_error', 'Role tidak dikenali');
                     redirect('auth');
                 }
@@ -232,6 +318,8 @@ class Auth extends CI_Controller
             }
         }
     }
+
+
 
     public function logout()
     {

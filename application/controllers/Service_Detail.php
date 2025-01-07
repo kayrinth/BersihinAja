@@ -29,14 +29,18 @@ class Service_Detail extends CI_Controller
             exit;
         }
 
+        // Pastikan field kabupaten user sesuai
+        $kabupaten = $user_data['Kabupaten'];
 
-        $this->session->set_userdata('id_user', $user_data['Id_User']);
+        // Ambil data pekerja berdasarkan kabupaten user
+        $data['pekerja'] = $this->Muser->getPekerjaByAlamat($kabupaten);
 
-        $data['pekerja'] = $this->Muser->getPekerjaByAlamat($user_data['Alamat_User']) ?? [];
+        // var_dump($data['pekerja']);
+        // exit;
 
+        // Ambil ID layanan dari URL
         $id_services = $this->input->get('id');
         $data['detail_layanan'] = $this->Mservice_detail->getServiceDetail($id_services);
-
 
         if (empty($data['detail_layanan'])) {
             $this->session->set_flashdata('error', 'Layanan tidak ditemukan.');
@@ -125,7 +129,6 @@ class Service_Detail extends CI_Controller
             }
         }
 
-
         // Hitung total harga
         $total_harga = $detail_layanan['Harga']; // Mulai dengan harga layanan
 
@@ -138,6 +141,7 @@ class Service_Detail extends CI_Controller
                 }
             }
         }
+
         // Generate order_id
         $order_id = uniqid() . '-' . time();
 
@@ -146,7 +150,7 @@ class Service_Detail extends CI_Controller
             'Id_Jenis_Layanan' => $id_services,
             'Total' => $total_harga,
             'Status_Pembayaran' => 'Belum Dibayar',
-            'Alamat' => $user_data['Alamat_User'],
+            'Kabupaten' => $user_data['Kabupaten'],
             'Tanggal_Order' => $tanggal_order,
             'timeout_at' => $timeout_at,
             'Id_Paket' => !empty($selected_paket) ? implode(',', $selected_paket) : null,
@@ -161,6 +165,7 @@ class Service_Detail extends CI_Controller
         // Redirect ke halaman konfirmasi atau nota pemesanan
         redirect('service_detail/confirmOrder');
     }
+
 
     public function confirmOrder()
     {
@@ -238,7 +243,7 @@ class Service_Detail extends CI_Controller
         $id_services = $this->input->post('id_services');
         $selected_paket = $this->input->post('paket');
         $selected_pekerja = $this->input->post('selected_pekerja');
-        $alamat = $this->input->post('alamat');
+        $kabupaten = $this->input->post('kabupaten');
 
         $selected_paket = $this->input->post('paket');
         if (empty($selected_paket)) {
@@ -275,7 +280,7 @@ class Service_Detail extends CI_Controller
             'Id_Jenis_Layanan' => $id_services,
             'Total' => $total_harga,
             'Status_Pembayaran' => $status_pembayaran,
-            'Alamat' => $alamat,
+            'Kabupaten' => $kabupaten,
             'Tanggal_Order' => $tanggal_order,
             'timeout_at' => $timeout_at,
             'Id_Paket' => !empty($selected_paket) ? implode(',', $selected_paket) : null,
@@ -359,6 +364,9 @@ class Service_Detail extends CI_Controller
             case 'capture':
             case 'settlement':
                 $status_pembayaran = 'Dibayar';
+                $selected_pekerja = explode(',', $order_exists->Id_Pekerja);
+                $this->load->model('Muser');
+                $this->Muser->updateStatus($selected_pekerja, 'Bekerja');
                 break;
             case 'pending':
                 $status_pembayaran = 'Belum Dibayar';

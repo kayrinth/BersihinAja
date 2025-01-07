@@ -1,83 +1,65 @@
 <main style="margin-top: 58px">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
-				<h5>Detail Pekerja</h5>
-				<table class="table table-bordered">
-					<tr>
-						<td>Email Pekerja</td>
-						<td><?php echo htmlspecialchars($pekerja['Email_User'] ?? 'Tidak tersedia'); ?></td>
-					</tr>
-					<tr>
-						<td>Nama Pekerja</td>
-						<td><?php echo htmlspecialchars($pekerja['Nama_User'] ?? 'Tidak tersedia'); ?></td>
-					</tr>
-					<tr>
-						<td>Alamat Pekerja</td>
-						<td><?php echo htmlspecialchars($pekerja['Alamat_User'] ?? 'Tidak tersedia'); ?></td>
-					</tr>
-					<tr>
-						<td>No.Hp Pekerja</td>
-						<td><?php echo htmlspecialchars($pekerja['No_Hp'] ?? 'Tidak tersedia'); ?></td>
-					</tr>
-				</table>
+			<div class="col-md-12">
+				<div class="card shadow-sm border-0">
+					<div class="card-header bg-primary text-white">
+						<h5 class="mb-0">Detail Pemesanan</h5>
+					</div>
+					<div class="card-body">
+						<?php if (!empty($detail_pemesanan)): ?>
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead class="table-light">
+										<tr>
+											<th>No</th>
+											<th>Tanggal Order</th>
+											<th>Customer</th>
+											<th>Layanan</th>
+											<th>Paket</th>
+											<th>Total</th>
+											<th>Ulasan</th>
+											<th>Rating</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($detail_pemesanan as $index => $pemesanan): ?>
+											<tr>
+												<td><?php echo $index + 1; ?></td>
+												<td><?php echo date('d M Y', strtotime($pemesanan['Tanggal_Order'])); ?></td>
+												<td><?php echo $pemesanan['Nama_Customer']; ?></td>
+												<td><?php echo $pemesanan['Nama_Layanan']; ?></td>
+												<td><?php echo $pemesanan['Nama_Paket']; ?></td>
+												<td>Rp <?php echo number_format($pemesanan['Total'], 0, ',', '.'); ?></td>
+												<td><?php echo !empty($pemesanan['Ulasan']) ? $pemesanan['Ulasan'] : 'Belum diulas'; ?></td>
+												<td>
+													<?php if (!empty($pemesanan['Jumlah_Rating'])): ?>
+														<span class="text-warning">
+															<?php for ($i = 0; $i < $pemesanan['Jumlah_Rating']; $i++): ?>
+																&#9733;
+															<?php endfor; ?>
+															<?php for ($i = $pemesanan['Jumlah_Rating']; $i < 5; $i++): ?>
+																&#9734;
+															<?php endfor; ?>
+														</span>
+													<?php else: ?>
+														<span class="text-muted">Belum ada rating</span>
+													<?php endif; ?>
+												</td>
+
+											</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
+						<?php else: ?>
+							<div class="alert alert-info text-center mb-0">
+								Tidak ada detail pemesanan untuk saat ini.
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
 			</div>
-			<!-- <div class="col-md-8">
-				<h5>Transaksi Jual</h5>
-				<table class="table table-bordered" id="tabelku">
-					<thead>
-					<tr>
-						<th>No</th>
-						<th>Tanggal</th>
-						<th>Total</th>
-									<th>Status</th>
-						<th>Opsi</th>
-					</tr>
-					</thead>
-					<tbody>
-								<?php foreach ($jual as $k => $v): ?>
-
-					<tr>
-						<td><?php echo $k +1; ?></td>
-						<td><?php echo $v['tanggal_transaksi'];?></td>
-						<td><?php echo $v['total_transaksi']; ?></td>
-						<td><?php echo $v['status_transaksi']; ?></td>
-						<td>
-						<a href="<?php echo base_url("transaksi/detail/".$v["id_transaksi"]) ?>" class="btn btn-info">Detail</a>
-						</td>
-					</tr>
-								<?php endforeach ?>
-					</tbody>
-				</table>
-				
-				<h5>Transaksi Beli</h5>
-					<table class="table table-bordered" id="tabelku">
-						<thead>
-						<tr>
-							<th>No</th>
-							<th>Tanggal</th>
-							<th>Total</th>
-										<th>Status</th>
-							<th>Opsi</th>
-						</tr>
-						</thead>
-						<tbody>
-									<?php foreach ($beli as $k => $v): ?>
-
-						<tr>
-							<td><?php echo $k +1; ?></td>
-							<td><?php echo $v['tanggal_transaksi'];?></td>
-							<td><?php echo $v['total_transaksi']; ?></td>
-							<td><?php echo $v['status_transaksi']; ?></td>
-							<td>
-							<a href="<?php echo base_url("transaksi/detail/".$v["id_transaksi"]) ?>" class="btn btn-info">Detail</a>
-							</td>
-						</tr>
-									<?php endforeach ?>
-						</tbody>
-					</table>
-				
-			</div> -->
 		</div>
 	</div>
 </main>

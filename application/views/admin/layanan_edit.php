@@ -13,7 +13,7 @@
 
 			<div class="mb-3">
 				<label>Harga Layanan</label>
-				<input type="text" name="Harga" value="<?php echo $jenis_layanan['Harga'] ?>" class="form-control" >
+				<input type="text" name="Harga" value="<?php echo $jenis_layanan['Harga'] ?>" class="form-control">
 				<span class="text-danger small">
 					<?php echo form_error("Harga"); ?>
 				</span>
@@ -29,7 +29,7 @@
 
 			<div class="mb-3">
 				<label>Maksimal_Jam</label>
-				<input type="text" name="Maksimal_Jam" value="<?php echo $jenis_layanan['Maksimal_Jam'] ?>" class="form-control" >
+				<input type="text" name="Maksimal_Jam" value="<?php echo $jenis_layanan['Maksimal_Jam'] ?>" class="form-control">
 				<span class="text-danger small">
 					<?php echo form_error("Maksimal_Jam"); ?>
 				</span>
@@ -42,36 +42,36 @@
 					<?php echo form_error("Estimasi"); ?>
 				</span>
 			</div>
-			
+
 			<div class="mb-3">
 				<label>Jumlah_Cleaner</label>
-				<input type="text" name="Jumlah_Cleaner" value="<?php echo $jenis_layanan['Jumlah_Cleaner'] ?>" class="form-control" >
+				<input type="text" name="Jumlah_Cleaner" value="<?php echo $jenis_layanan['Jumlah_Cleaner'] ?>" class="form-control">
 				<span class="text-danger small">
 					<?php echo form_error("Jumlah_Cleaner"); ?>
 				</span>
 			</div>
 
-			<!-- <div class="mb-3">
+			<div class="mb-3">
 				<label>Deskripsi</label>
-				
+
 				<textarea name="Deskripsi" id="editorku" class="form-control"><?php echo set_value("Deskripsi", $jenis_layanan['Deskripsi']) ?>
 				</textarea>
 
 				<span class="text-danger small">
 					<?php echo form_error("Deskripsi"); ?>
 				</span>
-			</div> -->
+			</div>
 
 			<div class="mb-3">
 				<label>Image</label><br>
-				<img src="<?php echo $this->config->item("url_layanan").$jenis_layanan["Foto_Layanan"] ?>" width="300">
+				<img src="<?php echo $this->config->item("url_layanan") . $jenis_layanan["Foto_Layanan"] ?>" width="300">
 			</div>
-			
+
 			<div class="mb-3">
 				<label>Ganti Image layanan</label>
 				<input type="file" name="Foto_Layanan" class="form-control">
 			</div>
-			<button type="submit" class ="btn btn-primary">Simpan</button>
+			<button type="submit" class="btn btn-primary">Simpan</button>
 		</form>
 	</div>
 </main>

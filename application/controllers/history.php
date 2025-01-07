@@ -16,20 +16,19 @@ class History extends CI_Controller
         $this->load->model('Mhistory');
         // $this->load->library('midtrans');
     }
-
     public function index()
     {
-        // Ambil ID user dari session
         $user_id = $this->session->userdata('id_user');
 
-        // Ambil history transaksi
+        // Mengambil data transaksi dengan paket
         $data['transactions'] = $this->Mhistory->get_user_transactions($user_id);
+        $data['transaksi_detail'] = $this->Mhistory->get_transaction_details($user_id);
 
-        // Load view
         $this->load->view('header');
         $this->load->view('history/index', $data);
         $this->load->view('footer');
     }
+
 
     public function repay($order_id)
     {
@@ -164,5 +163,20 @@ class History extends CI_Controller
             http_response_code(500);
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
+    }
+    public function submit_rating()
+    {
+        $order_id = $this->input->post('order_id');
+        $rating = $this->input->post('rating');
+        $ulasan = $this->input->post('ulasan');
+
+        $data = [
+            'Jumlah_Rating' => $rating,
+            'Ulasan' => $ulasan
+        ];
+
+        $this->Mhistory->update_rating($order_id, $data);
+
+        redirect('history');
     }
 }

@@ -60,23 +60,42 @@
 					<div class="mb-3">
 						<label for="pekerja" class="form-label">Pilih Pekerja</label>
 						<div class="row g-3">
-							<?php foreach ($pekerja as $v): ?>
-								<div class="col-md-3">
-									<div class="card pekerja-card" onclick="toggleSelection(<?= $v['Id_User']; ?>)">
-										<img src="<?= $this->config->item('url_customer') . $v['Foto_User']; ?>"
-											alt="<?= $v['Nama_User']; ?>"
-											class="card-img-top">
-										<div class="card-body text-center">
-											<h5 class="card-title"><?= $v['Nama_User']; ?></h5>
+							<?php
+							// Pastikan bahwa $pekerja tidak kosong
+							if (!empty($pekerja)) {
+								// Ambil 3 pekerja secara acak dari array $pekerja
+								$random_pekerja_keys = array_rand($pekerja, min(3, count($pekerja))); // Gunakan min untuk menangani array dengan kurang dari 3 elemen
+
+								// Jika hanya ada satu elemen yang terpilih, ubah array ke array yang lebih sesuai untuk looping
+								if (!is_array($random_pekerja_keys)) {
+									$random_pekerja_keys = [$random_pekerja_keys];
+								}
+
+								foreach ($random_pekerja_keys as $key):
+									$v = $pekerja[$key]; // Ambil data pekerja berdasarkan key
+							?>
+									<div class="col-md-3">
+										<div class="card pekerja-card" onclick="toggleSelection(<?= $v['Id_User']; ?>)">
+											<img src="<?php echo (!empty($v['Foto_User'])) ?
+															$this->config->item('url_customer') . $v['Foto_User'] :
+															base_url('assets/default-image.png'); ?>"
+												alt="<?= $v['Nama_User']; ?>" class="card-img-top">
+
+											<div class="card-body text-center">
+												<h5 class="card-title"><?= $v['Nama_User']; ?></h5>
+											</div>
+											<input type="checkbox" name="selected_pekerja[]" value="<?= $v['Id_User']; ?>" id="pekerja_<?= $v['Id_User']; ?>" hidden>
 										</div>
-										<input type="checkbox" name="selected_pekerja[]" value="<?= $v['Id_User']; ?>" id="pekerja_<?= $v['Id_User']; ?>" hidden>
 									</div>
-								</div>
-
-							<?php endforeach; ?>
+							<?php
+								endforeach;
+							} else {
+								echo '<p>Tidak ada pekerja yang tersedia.</p>';
+							}
+							?>
 						</div>
-					</div>
 
+					</div>
 					<!-- Tombol Pesan -->
 					<button type="submit" class="btn btn-primary w-100 py-2">
 						Pesan Sekarang
