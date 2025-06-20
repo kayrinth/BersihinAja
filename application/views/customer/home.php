@@ -109,7 +109,7 @@
           <!-- Crew Handal -->
           <div class="flex gap-3">
             <div class="flex justify-center items-center h-20 w-20 bg-[#AAD9BB] rounded-3">
-              <img src="/bersihinAja/assets/users.svg" alt="">
+              <img src="/assets/users.svg" alt="">
             </div>
             <div>
               <h3 class="font-semibold">Crew Handal</h3>
@@ -119,7 +119,7 @@
           <!-- Jadwal Fleksibel -->
           <div class="flex gap-3">
             <div class="flex justify-center items-center h-20 w-20 bg-[#AAD9BB] rounded-3">
-              <img src="/bersihinAja/assets/clock.svg" alt="">
+              <img src="/assets/clock.svg" alt="">
             </div>
             <div>
               <h3 class="font-semibold">Jadwal Fleksibel</h3>
@@ -132,7 +132,7 @@
           <!-- Paket Fleksibel -->
           <div class="flex gap-3">
             <div class="flex justify-center items-center h-20 w-20 bg-[#AAD9BB] rounded-3">
-              <img src="/bersihinAja/assets/package.svg" alt="">
+              <img src="/assets/package.svg" alt="">
             </div>
             <div>
               <h3 class="font-semibold">Paket yang Fleksibel</h3>
@@ -142,7 +142,7 @@
           <!-- Perhatian Detail -->
           <div class="flex gap-3">
             <div class="flex justify-center items-center h-20 w-20 bg-[#AAD9BB] rounded-3">
-              <img src="/bersihinAja/assets/smile.svg" alt="">
+              <img src="/assets/smile.svg" alt="">
             </div>
             <div>
               <h3 class="font-semibold">Perhatian terhadap Detail</h3>
