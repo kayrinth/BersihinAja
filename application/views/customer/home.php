@@ -11,7 +11,7 @@
   <style>
     .header-section {
       position: relative;
-      background-image: url('/bersihinAja/assets/6856377.png');
+      background-image: url('/assets/6856377.png');
       background-size: cover;
       background-position: center;
       height: 100vh;
