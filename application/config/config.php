@@ -23,27 +23,39 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/BersihinAja/';
-$config['pilih'] = 'http://localhost/BersihinAja/pilih';
-$config['registUser'] = 'http://localhost/BersihinAja/registUser';
+//main
+$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+$config['base_url'] .= "://".$_SERVER['HTTP_HOST'];
+$config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
 
-$config['Foto_Customer'] = $_SERVER['DOCUMENT_ROOT'] . "/BersihinAja/assets/foto_customer/";
-$config["url_customer"] = 'http://localhost/BersihinAja/assets/foto_customer/';
+$config['pilih'] = $config['base_url'] . 'user/pilih';
+$config['registUser'] = $config['base_url'] . 'user/registUser';
 
+$config['Foto_Customer'] = './assets/foto_customer/';
+$config["url_customer"] = $config['base_url'] . './assets/foto_customer/';
+//main
 
-$config['assets_layanan'] = $_SERVER['DOCUMENT_ROOT'] . "/BersihinAja/assets/layanan/";
-$config["url_layanan"] = 'http://localhost/BersihinAja/assets/layanan/';
-
-$config['assets_produk'] = $_SERVER["DOCUMENT_ROOT"] . "/BersihinAja/assets/produk/";
-$config["url_produk"] = 'http://localhost/BersihinAja/assets/produk/';
-
-$config['assets_slider'] = $_SERVER["DOCUMENT_ROOT"] . "/BersihinAja/assets/slider/";
-$config["url_slider"] = 'http://localhost/BersihinAja/assets/slider/';
-
-$config['assets_artikel'] = $_SERVER["DOCUMENT_ROOT"] . "/BersihinAja/assets/artikel/";
-$config["url_artikel"] = 'http://localhost/BersihinAja/assets/artikel/';
 // admin
+$config['assets_layanan'] = FCPATH . 'assets/layanan/';
+$config['url_layanan'] = $config['base_url'] . 'assets/layanan/';
+
+$config['assets_produk'] = './assets/produk/';
+$config['url_produk'] = $config['base_url'] . 'assets/produk/';
+
+$config['assets_slider'] = './assets/slider/';
+$config['url_slider'] = $config['base_url'] . 'assets/slider/';
+
+$config['assets_artikel'] = './assets/artikel/';
+$config['url_artikel'] = $config['base_url'] . 'assets/artikel/';
+
+$config['max_size'] = 2048; // Maksimal 2MB
+// admin
+
+
+
+
+
 
 
 /*
@@ -123,7 +135,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = TRUE;
+$config['enable_hooks'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -410,7 +422,7 @@ $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
+$config['sess_save_path'] = sys_get_temp_dir();
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 300;
 $config['sess_regenerate_destroy'] = FALSE;
