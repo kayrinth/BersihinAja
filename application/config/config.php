@@ -24,14 +24,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 //main
-$config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
-$config['base_url'] .= "://".$_SERVER['HTTP_HOST'];
-$config['base_url'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-
-
+$config['base_url'] = 'https://bersihinaja.my.id/';
 $config['pilih'] = $config['base_url'] . 'user/pilih';
 $config['registUser'] = $config['base_url'] . 'user/registUser';
-
 $config['Foto_Customer'] = './assets/foto_customer/';
 $config["url_customer"] = $config['base_url'] . './assets/foto_customer/';
 //main
