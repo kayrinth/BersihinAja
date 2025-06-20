@@ -15,7 +15,7 @@
         <!-- Logo -->
         <div class="flex items-center">
           <a href="<?php echo base_url('/'); ?>" class="flex items-center">
-            <img src="/bersihinAja/assets/wind.svg" alt="logo" class="h-6 mr-2">
+            <img src="/assets/wind.svg" alt="logo" class="h-6 mr-2">
             <span class="text-xl font-bold text-gray-800">BersihinAja</span>
           </a>
         </div>
