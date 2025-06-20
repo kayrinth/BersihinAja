@@ -15,7 +15,7 @@
 
   <!-- MDB -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.min.css" rel="stylesheet"/>
-	<link rel="stylesheet" href="//<?php echo $_SERVER['HTTP_HOST'] . '/assets/css/admin.css'; ?>" />
+  <link rel="stylesheet" href="<?php echo base_url('/assets/css/admin.css'); ?>" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
   crossorigin="anonymous"></script>
   
@@ -151,7 +151,7 @@
   <!--Main layout-->
   <!-- MDB -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.umd.min.js"></script>
-  <script src="//<?php echo $_SERVER['HTTP_HOST']; ?>/assets/js/admin.js"></script>
+  <script src="<?php echo base_url('/assets/js/admin.js'); ?>"></script>
 
 </body>
 

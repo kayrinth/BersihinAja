@@ -1,89 +1,38 @@
 <main style="margin-top: 58px">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
-				<h5>Detail Customer</h5>
-				<?php if (!empty($customer)): ?>
+			<div class="col-md-8">
+				<h5>Detail Pemesanan</h5>
+				<?php if (!empty($detail_pemesanan)): ?>
 					<table class="table table-bordered">
-						<tr>
-							<td>Email Customer</td>
-							<td><?php echo $customer['Email_User'] ?></td>
-						</tr>
-						<tr>
-							<td>Nama Customer</td>
-							<td><?php echo $customer['Nama_User'] ?></td>
-						</tr>
-
-						<tr>
-							<td>Alamat Customer</td>
-							<td><?php echo $customer['Alamat_User'] ?></td>
-						</tr>
-						<tr>
-							<td>No.Hp Customer</td>
-							<td><?php echo $customer['No_Hp'] ?></td>
-						</tr>
-					
-					</table>
-				<?php else: ?>
-				<p>Data customer tidak ditemukan.</p>
-				<?php endif; ?>
-			</div>
-			<!-- <div class="col-md-8">
-				<h5>Transaksi Jual</h5>
-				<table class="table table-bordered" id="tabelku">
-					<thead>
-					<tr>
-						<th>No</th>
-						<th>Tanggal</th>
-						<th>Total</th>
-									<th>Status</th>
-						<th>Opsi</th>
-					</tr>
-					</thead>
-					<tbody>
-								<?php foreach ($jual as $k => $v): ?>
-
-					<tr>
-						<td><?php echo $k +1; ?></td>
-						<td><?php echo $v['tanggal_transaksi'];?></td>
-						<td><?php echo $v['total_transaksi']; ?></td>
-						<td><?php echo $v['status_transaksi']; ?></td>
-						<td>
-						<a href="<?php echo base_url("transaksi/detail/".$v["id_transaksi"]) ?>" class="btn btn-info">Detail</a>
-						</td>
-					</tr>
-								<?php endforeach ?>
-					</tbody>
-				</table>
-				
-				<h5>Transaksi Beli</h5>
-					<table class="table table-bordered" id="tabelku">
 						<thead>
-						<tr>
-							<th>No</th>
-							<th>Tanggal</th>
-							<th>Total</th>
-										<th>Status</th>
-							<th>Opsi</th>
-						</tr>
+							<tr>
+								<th>No</th>
+								<th>Tanggal Order</th>
+								<th>Total</th>
+								<th>Status Pembayaran</th>
+								<th>Ulasan</th>
+								<th>Jumlah Rating</th>
+							</tr>
 						</thead>
 						<tbody>
-									<?php foreach ($beli as $k => $v): ?>
-
-						<tr>
-							<td><?php echo $k +1; ?></td>
-							<td><?php echo $v['tanggal_transaksi'];?></td>
-							<td><?php echo $v['total_transaksi']; ?></td>
-							<td><?php echo $v['status_transaksi']; ?></td>
-							<td>
-							<a href="<?php echo base_url("transaksi/detail/".$v["id_transaksi"]) ?>" class="btn btn-info">Detail</a>
-							</td>
-						</tr>
-									<?php endforeach ?>
+							<?php foreach ($detail_pemesanan as $index => $pemesanan): ?>
+								<tr>
+									<td><?php echo $index + 1; ?></td>
+									<td><?php echo $pemesanan['Tanggal_Order']; ?></td>
+									<td><?php echo $pemesanan['Total']; ?></td>
+									<td><?php echo $pemesanan['Status_Pembayaran']; ?></td>
+									<td><?php echo $pemesanan['Ulasan']; ?></td>
+									<td><?php echo $pemesanan['Jumlah_Rating']; ?></td>
+								</tr>
+							<?php endforeach; ?>
 						</tbody>
+
 					</table>
-				
-			</div> -->
+				<?php else: ?>
+					<p>Tidak ada detail pemesanan untuk customer ini.</p>
+				<?php endif; ?>
+			</div>
 		</div>
 	</div>
 </main>

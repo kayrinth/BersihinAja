@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -55,4 +55,5 @@ $route['translate_uri_dashes'] = FALSE;
 
 //untuk kondisi user belum login atau role_id tidak sesuai
 $route['no_access'] = 'no_access/index';
-$route['service_detail'] = 'Service_Detail/index';
+$route['service_detail/saveOrder'] = 'Service_Detail/saveOrder';
+$route['services/checkout/(:num)'] = 'service_detail/checkout/$1';

@@ -64,9 +64,33 @@
                 <?php echo form_error('Nama_User', '<small class="text-danger">', '</small>'); ?>
             </div>
             <div class="mb-3">
-                <label for="Alamat_User" class="form-label">Alamat</label>
-                <input type="text" class="form-control" id="Alamat_User" name="Alamat_User" value="<?= $user['Alamat_User']; ?>">
-                <?php echo form_error('Alamat_User', '<small class="text-danger">', '</small>'); ?>
+                <label for="provinsi" class="form-label">Provinsi</label>
+                <select class="form-select" id="provinsi" name="Provinsi" required>
+                    <option value="">Pilih Provinsi</option>
+                    <?php if (!empty($provinces)): ?>
+                        <?php foreach ($provinces as $provinsi): ?>
+                            <option value="<?= $provinsi['id']; ?>" <?= ($user['Provinsi'] == $provinsi['id']) ? 'selected' : ''; ?>>
+                                <?= $provinsi['name']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+                <?php echo form_error('Provinsi', '<small class="text-danger">', '</small>'); ?>
+            </div>
+
+            <div class="mb-3">
+                <label for="kabupaten" class="form-label">Kabupaten</label>
+                <select class="form-select" id="kabupaten" name="Kabupaten" required>
+                    <option value="">Pilih kabupaten</option>
+                    <?php if (!empty($kabupatens)): ?>
+                        <?php foreach ($kabupatens as $kabupaten): ?>
+                            <option value="<?= $kabupaten['id']; ?>" <?= ($user['Kabupaten'] == $kabupaten['id']) ? 'selected' : ''; ?>>
+                                <?= $kabupaten['name']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+                <?php echo form_error('Kabupaten', '<small class="text-danger">', '</small>'); ?>
             </div>
             <div class="mb-3">
                 <label for="No_Hp" class="form-label">No Telepon</label>
@@ -101,6 +125,52 @@
                 toggleIcon.classList.add('fa-eye');
             }
         }
+
+        $(document).ready(function() {
+            $('#provinsi').on('change', function() {
+                var provinsi_id = $(this).val();
+                if (provinsi_id) {
+                    $.ajax({
+                        url: '<?php echo base_url('auth/getKabupaten'); ?>',
+                        type: 'POST',
+                        data: {
+                            provinsi_id: provinsi_id
+                        },
+                        success: function(response) {
+                            try {
+                                var kabupatenData = JSON.parse(response);
+                                var kabupatenSelect = $('#kabupaten');
+                                kabupatenSelect.empty();
+
+                                if (kabupatenData.length > 0) {
+                                    kabupatenSelect.append('<option value="">Pilih Kabupaten</option>');
+                                    $.each(kabupatenData, function(index, kabupaten) {
+                                        var selected = (kabupaten.id == '<?= $user['Kabupaten'] ?>') ? 'selected' : '';
+                                        kabupatenSelect.append(
+                                            '<option value="' + kabupaten.id + '" ' + selected + '>' +
+                                            kabupaten.name + '</option>'
+                                        );
+                                    });
+                                } else {
+                                    kabupatenSelect.append('<option value="">Tidak ada kabupaten</option>');
+                                }
+                            } catch (e) {
+                                console.error("Error parsing JSON:", e);
+                                console.log("Raw response:", response);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("AJAX Error:", error);
+                            $('#kabupaten').empty()
+                                .append('<option value="">Error loading kabupaten</option>');
+                        }
+                    });
+                } else {
+                    $('#kabupaten').empty()
+                        .append('<option value="">Pilih kabupaten</option>');
+                }
+            });
+        });
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </body>

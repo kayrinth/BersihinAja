@@ -23,7 +23,6 @@ class Mlayanan extends CI_Model{
 
 		//jika ngupload, maka dapatkan nama fotoyna untuk ditampung ke db
 		if ($ngupload){
-			log_message('error', $this->upload->display_errors());
 			$inputan['Foto_Layanan'] = $this->upload->data("file_name");
 		}
 
@@ -48,42 +47,24 @@ class Mlayanan extends CI_Model{
 		return $d;
 	}
 
-	function edit($inputan, $id_services) {
-		// Konfigurasi upload
+	function edit($inputan, $id_services){
+		//ngurusi foto_layanan jika user upload foto
+
 		$config['upload_path'] = $this->config->item("assets_layanan");
 		$config['allowed_types'] = 'gif|jpg|jpeg|png';
-		$this->load->library("upload", $config);
+		$this->load->library("upload", $config); 
 
-		// Adegan ngupload
+		//adegan ngupload
 		$ngupload = $this->upload->do_upload("Foto_Layanan");
 
-		if ($ngupload) {
-			// Jika berhasil upload, tambahkan nama file ke $inputan
+		//jika ngupload
+		if ($ngupload){
 			$inputan['Foto_Layanan'] = $this->upload->data("file_name");
-			log_message('info', "Upload berhasil, file: " . $inputan['Foto_Layanan']);
-		} else {
-			// Log error jika gagal upload
-			$error = $this->upload->display_errors();
-			log_message('error', "Upload error: " . $error);
-
-			// Kirim pesan error ke session
-			$this->session->set_flashdata('error', 'Gagal mengunggah foto: ' . strip_tags($error));
 		}
 
-		// Log data sebelum update
-		log_message('info', "Data yang akan diupdate untuk ID: $id_services - " . print_r($inputan, true));
-
-		// Query update data sesuai id_services
+		//query update data sesuai id_layanan
 		$this->db->where('Id_Services', $id_services);
 		$this->db->update('jenis_layanan', $inputan);
-
-		// Log hasil update
-		if ($this->db->affected_rows() > 0) {
-			log_message('info', "Data berhasil diupdate untuk ID: $id_services");
-		} else {
-			log_message('error', "Data gagal diupdate untuk ID: $id_services");
-		}
 	}
-
 }
 ?>

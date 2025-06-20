@@ -24,7 +24,7 @@ class Customer extends CI_Controller
 		//panggil model Mcustomer
 		$this->load->model("pekerja/Mcustomer");
 
-		$data["customer"] = $this->Mcustomer->tampilCustomer();
+		$data["customer"] = $this->Mcustomer->tampil();
 
 		$this->load->view("pekerja/header");
 		$this->load->view("pekerja/customer", $data);

@@ -78,41 +78,39 @@ class Layanan extends CI_Controller{
 		redirect('admin/layanan', 'refresh');
 	}
 
-	function edit($id_services) {
-		// 1. Tampilkan dulu layanan yang lama
+	function edit($id_services){
+
+
+		//1. Tmapilkan dulu layanan yang lama
 		$this->load->model("admin/Mlayanan");
 		$data['jenis_layanan'] = $this->Mlayanan->detail($id_services);
-		log_message('info', "Detail layanan untuk edit: " . print_r($data['jenis_layanan'], true));
 
-		// 2. Baru pikirkan mengubah data
+		//2. baru mikir ngubah data
 		$inputan = $this->input->post();
-		log_message('info', "Inputan edit diterima: " . print_r($inputan, true));
 
-		// Pasang form_validation
+		//pasang form_validation
 		$this->form_validation->set_rules("Nama_Layanan", "Nama Layanan", "required");
 
-		// Atur pesan dalam bahasa Indonesia
+		//atur pesan dalam b.indo
 		$this->form_validation->set_message("required", "%s wajib diisi");
 
-		// Jika ada inputan
-		if ($this->form_validation->run() == TRUE) {
-			// Jalankan fungsi edit() di model
+		//jk adad inputan
+		if ($this->form_validation->run()==TRUE ){
+			//jalankan fungsi edit()
 			$this->Mlayanan->edit($inputan, $id_services);
-			log_message('info', "Fungsi edit model dijalankan untuk ID: $id_services");
 
-			// Pesan sukses
-			$this->session->set_flashdata('pesan_sukses', 'Layanan telah diubah');
+			//pesan
+			$this->session->set_flashdata('pesan_sukses', 'layanan telah diubah');
 
-			// Redirect
+			//redirect
 			redirect('admin/layanan', 'refresh');
-		} else {
-			log_message('error', "Validasi gagal: " . validation_errors());
 		}
+
+
 
 		$this->load->view("admin/header");
 		$this->load->view("admin/layanan_edit", $data);
 		$this->load->view("admin/footer");
 	}
-
 }
 ?>

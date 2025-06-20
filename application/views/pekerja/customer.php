@@ -12,7 +12,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($customer as $k => $v): ?>
+            <?php foreach ($user as $k => $v): ?>
               <?php if (isset($v['Role_Id']) && $v['Role_Id'] == "customer"): ?>
                 <tr>
                   <td><?php echo $k + 1; ?></td>
