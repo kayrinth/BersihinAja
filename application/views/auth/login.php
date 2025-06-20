@@ -44,6 +44,13 @@
         <?= $this->session->flashdata('pesan_sukses'); ?>
         <?= $this->session->flashdata('pesan_gagal'); ?>
 
+        <?php if ($this->session->flashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show mx-4" role="alert">
+                <?= $this->session->flashdata('error'); ?>
+            </div>
+        <?php endif; ?>
+
+
         <form method="POST" action="<?= base_url('auth'); ?>" class="m-4">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>

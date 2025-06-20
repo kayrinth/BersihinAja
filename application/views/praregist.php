@@ -12,7 +12,7 @@
 
 <body class="bg-[#F9F9FE]">
     <div class="relative h-full w-full bg-cover bg-center p-20"
-        style="background-image: url('./assets/praregist.png');">
+        style="background-image: url('/assets/praregist.png');">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div class="relative flex flex-col justify-center h-full ">
             <h1 class="text-white text-4xl font-bold text-center">
@@ -42,7 +42,7 @@
         </p>
     </div>
 
-    <div class="bg-[#AAD9BB] w-full h-full p-10 text-center">
+    <div class="bg-gray-300 w-full h-full p-20 text-center">
         <h1 class="text-white mb-4">Daftarkan Diri Anda Sekarang!!</h1>
         <a class="bg-[#80BCBD] text-white p-3 rounded-3" href="<?php echo base_url('auth/registPekerja') ?>">Bergabunglah Dengan Kami!</a>
     </div>

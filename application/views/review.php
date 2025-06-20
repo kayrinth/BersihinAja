@@ -10,7 +10,7 @@
     <style>
         .header-section {
             position: relative;
-            background-image: url('./assets/testimoni.png');
+            background-image: url('/assets/6856377.png');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -46,7 +46,7 @@
 
 <body>
     <div class="relative h-full w-full bg-cover bg-center p-20 "
-        style="background-image: url('./assets/testimoni.png');">
+        style="background-image: url('/assets/testimoni.png');">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div class="relative flex flex-col justify-center h-full ">
             <h1 class="text-white text-4xl font-bold text-center">
@@ -56,32 +56,41 @@
     </div>
 
     <section id="testimonials" class="p-10 mt-0">
-        <div class="container py-5">
-            <div class="flex flex-row">
-                <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
-                    <h5 class="mx-3 mt-3">Joni</h5>
-                    <p class="mx-3">Home Cleaning</p>
-                    <p class="mx-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis eaque dicta deleniti tempora doloribus?.</p>
+        <div class="container mx-auto py-5">
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
+                    <div class="service-card h-full shadow-md border rounded-3 p-4">
+                        <h5 class="font-semibold text-lg mb-1">Joni</h5>
+                        <p class="text-sm text-gray-600">Home Cleaning</p>
+                        <p class="mt-2 text-gray-700">Pelayanannya cepat dan bersih banget. Rumah jadi wangi dan rapi dalam waktu singkat. Recommended!</p>
+                    </div>
                 </div>
-                <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
-                    <h5 class="mx-3 mt-3">Joni</h5>
-                    <p class="mx-3">Home Cleaning</p>
-                    <p class="mx-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis eaque dicta deleniti tempora doloribus?.</p>
+                <div class="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
+                    <div class="service-card h-full shadow-md border rounded-3 p-4">
+                        <h5 class="font-semibold text-lg mb-1">Sarah</h5>
+                        <p class="text-sm text-gray-600">home Cleaning</p>
+                        <p class="mt-2 text-gray-700">Pelayanannya sangat ramah dan profesional. Rumah jadi bersih dan rapi. Terima kasih!</p>
+                    </div>
                 </div>
-                <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
-                    <h5 class="mx-3 mt-3">Joni</h5>
-                    <p class="mx-3">Home Cleaning</p>
-                    <p class="mx-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis eaque dicta deleniti tempora doloribus?.</p>
+                <div class="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
+                    <div class="service-card h-full shadow-md border rounded-3 p-4">
+                        <h5 class="font-semibold text-lg mb-1">Raka</h5>
+                        <p class="text-sm text-gray-600">AC Service</p>
+                        <p class="mt-2 text-gray-700">Teknisi datang tepat waktu dan AC langsung dingin seperti baru. Harganya juga terjangkau.</p>
+                    </div>
                 </div>
-                <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
-                    <h5 class="mx-3 mt-3">Joni</h5>
-                    <p class="mx-3">Home Cleaning</p>
-                    <p class="mx-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis eaque dicta deleniti tempora doloribus?.</p>
+                <div class="w-full sm:w-1/2 lg:w-1/4 px-2 mb-4">
+                    <div class="service-card h-full shadow-md border rounded-3 p-4">
+                        <h5 class="font-semibold text-lg mb-1">Maya</h5>
+                        <p class="text-sm text-gray-600">Cuci Sofa</p>
+                        <p class="mt-2 text-gray-700">Sofa keluarga jadi wangi dan bersih. Anak-anak jadi betah duduk berlama-lama. Terima kasih!</p>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
     </section>
+
+
 
     </div>
 
