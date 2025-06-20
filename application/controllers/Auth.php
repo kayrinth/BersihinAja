@@ -40,14 +40,14 @@ class Auth extends CI_Controller
         $user = $this->db->get_where('user', ['Email_User' => $email])->row_array();
 
         if ($user) {
-            // Cocokkan password menggunakan hashing
-            if ($user['Password'] === sha1($password)) {
+            // Cocokkan password menggunakan password_verify
+            if (password_verify($password, $user['Password'])) {
                 // Set session untuk user yang berhasil login
                 $data = [
-                    'id_user' => $user['Id_User'],
+                    'id_user'    => $user['Id_User'],
                     'Email_User' => $user['Email_User'],
-                    'Nama_User' => $user['Nama_User'],
-                    'role_id' => $user['Role_Id'],
+                    'Nama_User'  => $user['Nama_User'],
+                    'role_id'    => $user['Role_Id'],
                 ];
                 $this->session->set_userdata($data);
 
@@ -64,7 +64,7 @@ class Auth extends CI_Controller
                 }
             } else {
                 // Password salah
-                $this->session->set_flashdata('error', 'Password salah.');
+                $this->session->set_flashdata('error', 'Email dan Password salah');
                 redirect('auth');
             }
         } else {
@@ -75,9 +75,9 @@ class Auth extends CI_Controller
     }
 
 
+
     public function registUser()
     {
-
         $url = "https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json";
 
         $ch = curl_init();
@@ -85,11 +85,22 @@ class Auth extends CI_Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            log_message('error', 'CURL Error (Provinsi): ' . curl_error($ch));
+            show_error('Gagal mengambil data provinsi. Silakan coba beberapa saat lagi.');
+        }
         curl_close($ch);
 
-        $data['provinces'] = json_decode($response, true);
+        $provinces = json_decode($response, true);
+        if (!$provinces) {
+            log_message('error', 'JSON Decode Error (Provinsi)');
+            show_error('Data provinsi tidak valid. Silakan coba beberapa saat lagi.');
+        }
 
+        $data['provinces'] = $provinces;
 
+        // Validasi form
         $this->form_validation->set_rules('Nama_User', 'Nama User', 'required|trim');
         $this->form_validation->set_rules('Email_User', 'Email User', 'required|trim|valid_email|is_unique[user.Email_User]', ['is_unique' => 'Email sudah digunakan']);
         $this->form_validation->set_rules('Provinsi', 'provinsi', 'required');
@@ -100,11 +111,12 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[3]|trim');
 
         if ($this->form_validation->run() == false) {
-
+            log_message('debug', 'Form validation failed: ' . json_encode($this->form_validation->error_array()));
             $this->load->view('auth/registUser', $data);
         } else {
             $role = $this->input->post('role_id');
             $status = ($role == 'pekerja') ? 'tidak bekerja' : '';
+
             $data = [
                 'Nama_User' => $this->input->post('Nama_User'),
                 'Email_User' => $this->input->post('Email_User'),
@@ -112,8 +124,8 @@ class Auth extends CI_Controller
                 'Kabupaten' => $this->input->post('Kabupaten'),
                 'No_Hp' => $this->input->post('No_Hp'),
                 'KTP' => $this->input->post('KTP'),
-                'Role_Id' => $this->input->post('role_id'),
-                'Password' => sha1($this->input->post('password')),
+                'Role_Id' => $role,
+                'Password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'Status' => $status
             ];
 
@@ -121,12 +133,12 @@ class Auth extends CI_Controller
                 $this->session->set_flashdata('pesan_sukses', '<div class="alert alert-success" role="alert"> Akun Berhasil Dibuat, Silahkan Login </div>');
                 redirect('auth');
             } else {
+                log_message('error', 'Gagal register user di database: ' . json_encode($data));
                 $this->session->set_flashdata('pesan_gagal', '<div class="alert alert-danger" role="alert"> Gagal Membuat Akun, Silahkan Coba Lagi </div>');
                 redirect('auth/registUser');
             }
         }
     }
-
 
 
     public function registPekerja()
