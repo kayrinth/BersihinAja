@@ -32,7 +32,7 @@ $config["url_customer"] = $config['base_url'] . './assets/foto_customer/';
 //main
 
 // admin
-$config['assets_layanan'] = FCPATH . 'assets/layanan/';
+$config['assets_layanan'] = './assets/layanan/';
 $config['url_layanan'] = $config['base_url'] . 'assets/layanan/';
 
 $config['assets_produk'] = './assets/produk/';
