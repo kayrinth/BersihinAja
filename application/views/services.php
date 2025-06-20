@@ -38,39 +38,28 @@
   </div>
 
   <section id="testimonials" class="p-10 mt-0">
-    <div class="container py-5">
-      <div class="flex flex-row">
+    <div class="container mx-auto py-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <?php foreach ($services as $s): ?>
-          <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
+          <div class="service-card bg-white w-full shadow-md border rounded-3 p-4">
             <a href="<?= base_url('service_detail?id=' . $s['Id_Services']); ?>" class="text-decoration-none">
-              <div class="flex justify-content-end flex-col text-center">
-                <img src="<?= base_url('./assets/layanan/' . $s['Foto_Layanan']); ?>" alt="<?= $s['Nama_Layanan']; ?>" class="w-full rounded-3 my-2">
-                <h5><?= $s['Nama_Layanan']; ?></h5>
+              <div class="flex flex-col items-center text-center">
+                <img src="<?= base_url('./assets/layanan/' . $s['Foto_Layanan']); ?>" alt="<?= $s['Nama_Layanan']; ?>" class="w-full rounded-3 my-2 object-cover">
+                <h5 class="text-lg font-semibold"><?= $s['Nama_Layanan']; ?></h5>
                 <h2>
                   <span class="text-[#80BCBD] text-lg">Rp</span>
-                  <span class="text-4xl"><?= number_format($s['Harga'], 0, ',', '.'); ?></span>
+                  <span class="text-2xl font-bold"><?= number_format($s['Harga'], 0, ',', '.'); ?></span>
                 </h2>
-                <p class="text-lg">Untuk ukuran ruangan <span class="text-[#80BCBD] font-bold"> <?= $s['Ukuran_Ruangan']; ?> m<sup>2</sup></span></p>
-                <p>
-                  <span class="text-lg">Maksimal pengerjaan <?= $s['Maksimal_Jam']; ?> jam</span><br>
-                  <span class="text-sm">(Est. <?= $s['Estimasi']; ?>)</span>
+                <p class="text-base">Untuk ukuran ruangan <span class="text-[#80BCBD] font-bold"> <?= $s['Ukuran_Ruangan']; ?> m<sup>2</sup></span></p>
+                <p class="text-sm">
+                  Maksimal pengerjaan <?= $s['Maksimal_Jam']; ?> jam<br>
+                  <span class="text-gray-500">(Est. <?= $s['Estimasi']; ?>)</span>
                 </p>
-                <p class="text-lg"><?= $s['Jumlah_Cleaner']; ?> Cleaner</p>
+                <p class="text-base"><?= $s['Jumlah_Cleaner']; ?> Cleaner</p>
               </div>
             </a>
           </div>
-
         <?php endforeach; ?>
-        <!-- <div class="service-card col-md-3 w-full h-full shadow-md border-1 rounded-3 mx-1">
-          <div class="flex justify-content-end flex-col text-center">
-            <img src="https://picsum.photos/200" alt="" class="w-full rounded-3 my-2">
-            <div class="icon">
-              <i class="bi bi-house"></i>
-            </div>
-            <h5>Small</h5>
-            <p>Get your home cleaned by our professional cleaning team.</p>
-          </div>
-        </div> -->
       </div>
     </div>
   </section>
