@@ -12,7 +12,7 @@
 
 <body class="bg-[#F9F9FE]">
     <div class="relative h-full w-full bg-cover bg-center p-20"
-        style="background-image: url('/assets/praregist.png');">
+        style="background-image: url('/bersihinAja/assets/praregist.png');">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div class="relative flex flex-col justify-center h-full ">
             <h1 class="text-white text-4xl font-bold text-center">

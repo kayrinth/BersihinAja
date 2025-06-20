@@ -10,7 +10,7 @@
     <style>
         .header-section {
             position: relative;
-            background-image: url('/assets/6856377.png');
+            background-image: url('/bersihinAja/assets/6856377.png');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -46,7 +46,7 @@
 
 <body>
     <div class="relative h-full w-full bg-cover bg-center p-20 "
-        style="background-image: url('/assets/testimoni.png');">
+        style="background-image: url('/bersihinAja/assets/testimoni.png');">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div class="relative flex flex-col justify-center h-full ">
             <h1 class="text-white text-4xl font-bold text-center">
