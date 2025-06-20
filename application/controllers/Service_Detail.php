@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Jakarta');
-class Service_Detail extends CI_Controller
+class Service_detail extends CI_Controller
 {
     public function __construct()
     {
