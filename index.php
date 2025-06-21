@@ -1,4 +1,7 @@
 <?php
+// Aplikasi dimatikan sementara
+exit('Aplikasi sedang dalam pemeliharaan. Silakan kembali nanti.');
+
 /**
  * CodeIgniter
  *
