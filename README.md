@@ -62,11 +62,11 @@ C:/xampp/htdocs/BersihinAja
 5️⃣ Run the project
 - Start your local server (XAMPP/Laragon/etc.)
 - Open browser:
-👉 http://localhost/BersihinAja
+```👉 http://localhost/BersihinAja```
 
 ## 👥 User Roles
-Customer: Can browse workers, request cleaning services, and manage bookings.
-Worker: Can register to offer services, manage requests, and update availability.
+- Customer: Can browse workers, request cleaning services, and manage bookings.
+- Worker: Can register to offer services, manage requests, and update availability.
 
 ## 📌 Roadmap (Future Improvements) 
 - Add online payment integration (Midtrans/Xendit)
