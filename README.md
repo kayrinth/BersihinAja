@@ -15,6 +15,7 @@ Anyone can **register** either as a **Customer** or a **Worker**, making it easy
 ✅ **Worker Listing** – Customers can browse available workers  
 ✅ **Database-Driven** – MySQL handles all user and booking data  
 ✅ **CodeIgniter 3 Framework** – Lightweight, fast, and reliable  
+✅ **Midtrans API Integration** – Secure online payment handling for cleaning service transactions  
 
 ---
 
@@ -23,6 +24,7 @@ Anyone can **register** either as a **Customer** or a **Worker**, making it easy
 - **Backend Framework**: [CodeIgniter 3](https://codeigniter.com/userguide3/)
 - **Database**: MySQL
 - **Frontend**: HTML5, CSS3, JavaScript
+- **API Integration**: Midtrans (Payment Gateway)
 - **Server Requirements**: PHP 7.2+ (with extensions: mysqli, mbstring, intl)
 
 ---
